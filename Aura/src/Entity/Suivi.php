@@ -38,7 +38,7 @@ class Suivi
     /**
      * @var \User
      *
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idClient", referencedColumnName="id")
      * })
@@ -48,12 +48,92 @@ class Suivi
     /**
      * @var \Objectif
      *
-     * @ORM\ManyToOne(targetEntity="Objectif")
+     * @ORM\ManyToOne(targetEntity=Objectif::class)
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idObjectif", referencedColumnName="id")
      * })
      */
     private $idobjectif;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getValeur(): int
+    {
+        return $this->valeur;
+    }
+
+    /**
+     * @param int $valeur
+     */
+    public function setValeur(int $valeur): void
+    {
+        $this->valeur = $valeur;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDate(): ?string
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param string $date
+     */
+    public function setDate(string $date): void
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @return User
+     */
+    public function getIdclient(): User
+    {
+        return $this->idclient;
+    }
+
+    /**
+     * @param User $idclient
+     */
+    public function setIdclient(User $idclient): void
+    {
+        $this->idclient = $idclient;
+    }
+
+    /**
+     * @return Objectif
+     */
+    public function getIdobjectif(): Objectif
+    {
+        return $this->idobjectif;
+    }
+
+    /**
+     * @param Objectif $idobjectif
+     */
+    public function setIdobjectif(Objectif $idobjectif): void
+    {
+        $this->idobjectif = $idobjectif;
+    }
 
 
 }

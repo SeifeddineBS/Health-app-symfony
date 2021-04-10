@@ -45,12 +45,92 @@ class ObjectifPred
     /**
      * @var \User
      *
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idAdmin", referencedColumnName="id")
      * })
      */
     private $idadmin;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDuree(): int
+    {
+        return $this->duree;
+    }
+
+    /**
+     * @param int $duree
+     */
+    public function setDuree(int $duree): void
+    {
+        $this->duree = $duree;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIcone(): ?string
+    {
+        return $this->icone;
+    }
+
+    /**
+     * @param string $icone
+     */
+    public function setIcone(string $icone): void
+    {
+        $this->icone = $icone;
+    }
+
+    /**
+     * @return User
+     */
+    public function getIdadmin(): User
+    {
+        return $this->idadmin;
+    }
+
+    /**
+     * @param User $idadmin
+     */
+    public function setIdadmin(User $idadmin): void
+    {
+        $this->idadmin = $idadmin;
+    }
 
 
 }
