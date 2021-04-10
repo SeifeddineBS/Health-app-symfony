@@ -1,0 +1,19 @@
+{% extends 'baseBack.html.twig' %}
+{% block body %}
+    <br>
+    <div class="container mt -4">
+        <h1>Ajouter un objectif</h1>
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-9"> {{ form_row(form.description) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"> {{ form_row(form.duree) }}</div>
+        </div>
+        {{ form_rest(form) }}
+        <br>
+        <button class="btn btn-primary"> Ajouter</button>
+        {{ form_end(form) }}
+        <br>
+    </div>
+{% endblock %}
