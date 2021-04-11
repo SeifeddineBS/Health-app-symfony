@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href="../assets/img/favicon.ico">
+    <link rel="icon" type="image/png" href="assets/img/favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
     <title>Light Bootstrap Dashboard by Creative Tim</title>
@@ -12,31 +12,35 @@
 
 
     <!-- Bootstrap core CSS     -->
-    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
 
     <!-- Animation library for notifications   -->
-    <link href="../assets/css/animate.min.css" rel="stylesheet"/>
+    <link href="assets/css/animate.min.css" rel="stylesheet"/>
 
     <!--  Light Bootstrap Table core CSS    -->
-    <link href="../assets/css/light-bootstrap-dashboard.css?v=1.4.0" rel="stylesheet"/>
+    <link href="assets/css/light-bootstrap-dashboard.css?v=1.4.0" rel="stylesheet"/>
 
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <link href="../assets/css/demo.css" rel="stylesheet" />
+    <link href="assets/css/demo.css" rel="stylesheet" />
 
 
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
-    <link href="../assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+    <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 </head>
 <body>
 
 <div class="wrapper">
     <div class="sidebar" data-color="purple" data-image="assets/img/sidebar-5.jpg">
 
-        <!--   you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple" -->
+        <!--
 
+            Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
+            Tip 2: you can also add an image using data-image tag
+
+        -->
 
         <div class="sidebar-wrapper">
             <div class="logo">
@@ -46,40 +50,40 @@
             </div>
 
             <ul class="nav">
-                <li>
+                <li class="active">
                     <a href="dashboard.html">
                         <i class="pe-7s-graph"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="active">
-                    <a href="user.html">
+                <li>
+                    <a href="ajouterActivite">
                         <i class="pe-7s-user"></i>
-                        <p>User Profile</p>
+                        <p>ajouter act</p>
                     </a>
                 </li>
                 <li>
-                    <a href="../listActivite">
+                    <a href="listActivite">
                         <i class="pe-7s-note2"></i>
-                        <p>Liste activite</p>
+                        <p>List activite</p>
                     </a>
                 </li>
                 <li>
-                    <a href="typography.html">
+                    <a href="listTherapie">
                         <i class="pe-7s-news-paper"></i>
-                        <p>Typography</p>
+                        <p>list therapie</p>
                     </a>
                 </li>
                 <li>
-                    <a href="icons.html">
+                    <a href="listPropoTherapie">
                         <i class="pe-7s-science"></i>
-                        <p>Icons</p>
+                        <p>propo th</p>
                     </a>
                 </li>
                 <li>
-                    <a href="maps.html">
+                    <a href="listPropoact">
                         <i class="pe-7s-map-marker"></i>
-                        <p>Maps</p>
+                        <p>propoact</p>
                     </a>
                 </li>
                 <li>
@@ -191,7 +195,24 @@
                             <div class="content">
 
                                 {{ form_start(our_form) }}
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        {{ form_row(our_form.sujet) }}
+
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_row(our_form.date) }}
+
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_row(our_form.idcoach) }}
+
+                                    </div>
+
+
+                                </div>
                                 {{ form_end(our_form) }}
+
                             </div>
                         </div>
                     </div>
@@ -269,14 +290,14 @@
 </body>
 
 <!--   Core JS Files   -->
-<script src="../assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
-<script src="../assets/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
+<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
 
 <!--  Charts Plugin -->
-<script src="../assets/js/chartist.min.js"></script>
+<script src="assets/js/chartist.min.js"></script>
 
 <!--  Notifications Plugin    -->
-<script src="../assets/js/bootstrap-notify.js"></script>
+<script src="assets/js/bootstrap-notify.js"></script>
 
 <!--  Google Maps Plugin    -->
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>

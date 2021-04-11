@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Proptherapie
  *
- * @ORM\Table(name="proptherapie")
+ * @ORM\Table(name="proptherapie", indexes={@ORM\Index(name="fk_coachth", columns={"idcoach"})})
  * @ORM\Entity
  */
 class Proptherapie
@@ -17,7 +17,7 @@ class Proptherapie
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     *
      */
     private $id;
 
@@ -50,18 +50,133 @@ class Proptherapie
     private $nombremax;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="idcoach", type="string", length=255, nullable=false)
-     */
-    private $idcoach;
-
-    /**
      * @var int
      *
      * @ORM\Column(name="nombre_parti", type="integer", nullable=false)
      */
-    private $nombreParti;
+    private $nombreParti = '0';
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idcoach", referencedColumnName="id")
+     * })
+     */
+    private $idcoach;
+
+    /**
+     * @return int
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSujet(): ?string
+    {
+        return $this->sujet;
+    }
+
+    /**
+     * @param string $sujet
+     */
+    public function setSujet(string $sujet): void
+    {
+        $this->sujet = $sujet;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDate(): ?string
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param string $date
+     */
+    public function setDate(string $date): void
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLieu(): ?string
+    {
+        return $this->lieu;
+    }
+
+    /**
+     * @param string $lieu
+     */
+    public function setLieu(string $lieu): void
+    {
+        $this->lieu = $lieu;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNombremax(): ?int
+    {
+        return $this->nombremax;
+    }
+
+    /**
+     * @param int $nombremax
+     */
+    public function setNombremax(int $nombremax): void
+    {
+        $this->nombremax = $nombremax;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNombreParti(): ?int
+    {
+        return $this->nombreParti;
+    }
+
+    /**
+     * @param int $nombreParti
+     */
+    public function setNombreParti(int $nombreParti): void
+    {
+        $this->nombreParti = $nombreParti;
+    }
+
+    /**
+     * @return User
+     */
+    public function getIdcoach(): ?User
+    {
+        return $this->idcoach;
+    }
+
+    /**
+     * @param User $idcoach
+     */
+    public function setIdcoach(User $idcoach): void
+    {
+        $this->idcoach = $idcoach;
+    }
 
 
 }

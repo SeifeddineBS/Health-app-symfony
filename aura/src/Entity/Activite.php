@@ -211,7 +211,7 @@ class Activite
     /**
      * @return User
      */
-    public function getIdcoach(): ?String
+    public function getIdcoach(): ?User
     {
         return $this->idcoach;
     }

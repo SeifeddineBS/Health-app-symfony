@@ -5,12 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Participationtherapie
+ * Participationactivte
  *
- * @ORM\Table(name="participationtherapie", indexes={@ORM\Index(name="fk_client", columns={"id_client"})})
+ * @ORM\Table(name="participationactivte", indexes={@ORM\Index(name="fk_acti", columns={"id_activite"}), @ORM\Index(name="fk_cl", columns={"id_client"})})
  * @ORM\Entity
  */
-class Participationtherapie
+class Participationactivte
 {
     /**
      * @var int
@@ -20,13 +20,6 @@ class Participationtherapie
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_therapie", type="integer", nullable=false)
-     */
-    private $idTherapie;
 
     /**
      * @var int|null
@@ -41,6 +34,16 @@ class Participationtherapie
      * @ORM\Column(name="aime", type="integer", nullable=true)
      */
     private $aime = '0';
+
+    /**
+     * @var \Activite
+     *
+     * @ORM\ManyToOne(targetEntity=Activite::class)
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_activite", referencedColumnName="id")
+     * })
+     */
+    private $idActivite;
 
     /**
      * @var \User
@@ -66,22 +69,6 @@ class Participationtherapie
     public function setId(int $id): void
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return int
-     */
-    public function getIdTherapie(): ?int
-    {
-        return $this->idTherapie;
-    }
-
-    /**
-     * @param int $idTherapie
-     */
-    public function setIdTherapie(int $idTherapie): void
-    {
-        $this->idTherapie = $idTherapie;
     }
 
     /**
@@ -114,6 +101,22 @@ class Participationtherapie
     public function setAime($aime): void
     {
         $this->aime = $aime;
+    }
+
+    /**
+     * @return Activite
+     */
+    public function getIdActivite(): ?Activite
+    {
+        return $this->idActivite;
+    }
+
+    /**
+     * @param Activite $idActivite
+     */
+    public function setIdActivite(Activite $idActivite): void
+    {
+        $this->idActivite = $idActivite;
     }
 
     /**
