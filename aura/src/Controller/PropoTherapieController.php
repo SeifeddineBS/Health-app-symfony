@@ -39,7 +39,7 @@ public function newPropoTherapie(Request $request)
     $em = $this->getDoctrine()->getManager();
 
     $form->handleRequest($request);
-    if ($form->isSubmitted()) {
+    if ($form->isSubmitted()&& $form->isValid()) {
         $em->persist($PropoTherapie);
         $em->flush();
         return $this->redirectToRoute("back");

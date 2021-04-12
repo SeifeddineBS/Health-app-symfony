@@ -3,7 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Therapie
  *
@@ -23,28 +24,28 @@ class Therapie
 
     /**
      * @var string
-     *
+     *@Assert\NotBlank(message="le champs sujet est obligatoire  ")
      * @ORM\Column(name="sujet", type="string", length=254, nullable=false)
      */
     private $sujet;
 
     /**
      * @var string
-     *
+     *@Assert\NotBlank(message="le champs date est obligatoire  ")
      * @ORM\Column(name="date", type="string", length=255, nullable=false)
      */
     private $date;
 
     /**
      * @var string
-     *
+     *@Assert\NotBlank(message="le champs lieu est obligatoire  ")
      * @ORM\Column(name="lieu", type="string", length=254, nullable=false)
      */
     private $lieu;
 
     /**
      * @var int
-     *
+     *@Assert\NotBlank(message="le champs nombre max est obligatoire  ")
      * @ORM\Column(name="nombremax", type="integer", nullable=false)
      */
     private $nombremax;

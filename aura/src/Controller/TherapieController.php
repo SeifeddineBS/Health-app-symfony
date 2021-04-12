@@ -36,7 +36,7 @@ class TherapieController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted()&& $form->isValid()) {
             $em->persist($Therapie);
             $em->flush();
             return $this->redirectToRoute("back");

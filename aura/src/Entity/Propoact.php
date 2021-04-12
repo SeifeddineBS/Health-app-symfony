@@ -3,7 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Propoact
  *
@@ -23,42 +24,42 @@ class Propoact
 
     /**
      * @var string
-     *
+     *@Assert\NotBlank(message="le champs duree est obligatoire  ")
      * @ORM\Column(name="duree", type="string", length=255, nullable=false)
      */
     private $duree;
 
     /**
      * @var string
-     *
+     *@Assert\NotBlank(message="le champs date est obligatoire  ")
      * @ORM\Column(name="date", type="string", length=255, nullable=false)
      */
     private $date;
 
     /**
      * @var int
-     *
+     *@Assert\NotBlank(message="le champs nombre max est obligatoire  ")
      * @ORM\Column(name="nombremax", type="integer", nullable=false)
      */
     private $nombremax;
 
     /**
      * @var string
-     *
+     *@Assert\NotBlank(message="le champs type est obligatoire  ")
      * @ORM\Column(name="type", type="string", length=255, nullable=false)
      */
     private $type;
 
     /**
      * @var string
-     *
+     *@Assert\NotBlank(message="le champs description est obligatoire  ")
      * @ORM\Column(name="description", type="string", length=255, nullable=false)
      */
     private $description;
 
     /**
      * @var string
-     *
+     *@Assert\NotBlank(message="le champs lieu est obligatoire  ")
      * @ORM\Column(name="lieu", type="string", length=255, nullable=false)
      */
     private $lieu;
@@ -77,6 +78,7 @@ class Propoact
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idcoach", referencedColumnName="id")
      * })
+     * @Assert\NotBlank(message="le champs id coach est obligatoire  ")
      */
     private $idcoach;
 

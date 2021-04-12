@@ -38,7 +38,7 @@ class ActiviteController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted()&& $form->isValid()) {
             $em->persist($Activite);
             $em->flush();
             return $this->redirectToRoute("back");
@@ -119,7 +119,7 @@ class ActiviteController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted()&& $form->isValid()) {
             $em->persist($Propoact);
             $em->flush();
             return $this->redirectToRoute("back");

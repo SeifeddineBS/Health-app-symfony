@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,47 +27,52 @@ class Activite
      * @var string
      *
      * @ORM\Column(name="duree", type="string", length=255, nullable=false)
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 4,
+     *     minMessage = "Duree doit etre minimun 10 min",
+     *      allowEmptyString = false
+     *      )
      */
     private $duree;
 
     /**
      * @var string
-     *
+     *@Assert\NotBlank(message="le champs date est obligatoire * ")
      * @ORM\Column(name="date", type="string", length=255, nullable=false)
      */
     private $date;
 
     /**
      * @var int
-     *
+     *@Assert\NotBlank(message="le champs nombre max est obligatoire  ")
      * @ORM\Column(name="nombremax", type="integer", nullable=false)
      */
     private $nombremax;
 
     /**
      * @var string
-     *
+     *@Assert\NotBlank(message="le champs type est obligatoire * ")
      * @ORM\Column(name="type", type="string", length=255, nullable=false)
      */
     private $type;
 
     /**
      * @var string
-     *
+     *@Assert\NotBlank(message="le champs description est obligatoire  ")
      * @ORM\Column(name="description", type="string", length=255, nullable=false)
      */
     private $description;
 
     /**
      * @var string
-     *
+     *     *@Assert\NotBlank(message="le champs lieu est obligatoire  ")
      * @ORM\Column(name="lieu", type="string", length=255, nullable=false)
      */
     private $lieu;
 
     /**
      * @var int
-     *
      * @ORM\Column(name="nombre_parti", type="integer", nullable=false)
      */
     private $nombreParti = '0';
