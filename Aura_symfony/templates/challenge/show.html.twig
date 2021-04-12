@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ challenge.titre }}{% endblock %}
+
+{% block body %}
+ <h1>{{ challenge.titre }}</h1>
+     <td>{{ challenge.type }}</td>
+     <td>{{ challenge.description }}</td>
+      <td>{{ challenge.dateDebut|date('d/m/Y') }}</td>
+     <td>{{ challenge.dateFin|date('d/m/Y') }}</td>     
+      
+   
+     <td>{{challenge.idNiveau }}</td>
+
+ <hr>
+ <a href="/">Retour</a>
+{% endblock %}

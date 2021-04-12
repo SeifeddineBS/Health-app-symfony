@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{<h1>Classement</h1>}{% endblock %}
+
+{% block body %}
+  <tr>
+      <td>{{ classement.idClient }}</td>
+     <td>{{ classement.idNiveau }}</td>
+     <td>{{ classement.position}}</td>
+     <td>{{ classement.nbPoints}}</td>
+    
+  </tr>
+ <hr>
+ <a href="/classement/home/">Retour</a>
+{% endblock %}

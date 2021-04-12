@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+{% block title%}  Classement{% endblock %}
+
+{% block body %}
+
+ {% if classements %}
+    <table id="classements" class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID Client</th>
+          <th>Niveau</th>
+          <th>position</th>
+          <th>nb points</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        {% for classement in classements %}
+          <tr>
+            <td>{{ classement.idClient }}</td>
+            <td>{{ classement.idNiveau }}</td>
+             <td>{{ classement.position}}</td>
+             <td>{{ classement.nbPoints}}</td>
+            
+           <td>
+              <a href="/classement/{{ classement.id }}" class="btn btn-dark">Détails</a>
+              <a href="/classement/edit/{{ classement.id }}" class="btn btn-dark">Modifier</a>
+               
+              <a href="/classement/delete/{{ classement.id }}" class="btn btn-danger" 
+              onclick="return confirm('Etes-vous sûr de supprimer ce classement?');">Supprimer</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>Aucun classement</p>
+  {% endif %} 
+  <a href="/classement/new/" class="btn btn-dark">créer</a>
+  <a href="/" class="btn btn-dark">Retour</a>
+{% endblock %}
