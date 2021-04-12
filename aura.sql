@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 08 avr. 2021 à 22:51
--- Version du serveur :  10.4.10-MariaDB
--- Version de PHP :  7.4.0
+-- Généré le : lun. 12 avr. 2021 à 15:48
+-- Version du serveur :  5.7.31
+-- Version de PHP : 7.4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `aura`
+-- Base de données : `aura`
 --
 
 -- --------------------------------------------------------
@@ -38,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `activite` (
   `type` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   `lieu` varchar(255) NOT NULL,
-  `nombre_parti` int(11) NOT NULL DEFAULT 0,
+  `nombre_parti` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `act1` (`idcoach`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -48,8 +47,12 @@ CREATE TABLE IF NOT EXISTS `activite` (
 --
 
 INSERT INTO `activite` (`id`, `idcoach`, `duree`, `date`, `nombremax`, `type`, `description`, `lieu`, `nombre_parti`) VALUES
-(1163, '12345672', '60', '23/04/2021', 100, 'Meditation', 'comfort -anti stress', 'par boulehia', 2),
+(454, '12345670', '12', '54', 54, '54545', '54', '54', 0),
+(1163, '12345670', '600', '23/04/2023', 100, 'Meditation', 'comfort -anti stress', 'par boulehia', 2),
+(12454, '12341231', '120', '21/20/2021', 20, 'yoga', '12', '1', 0),
 (30827, '12345672', '120', '4/2/2021', 15, 'Respiration', 'Anti-Stress', 'Ain Drahem', 1),
+(39118, '12345672', '60', '4/2/2021', 10, 'Yoga', 'Yoga de rire', 'Parc Boulehya', 0),
+(54945, '12345672', '1', '45', 45, '54', '4', '545', 0),
 (57212, '12345672', '60', '07/04/2021', 20, 'Pranayama', 'respiration', 'parc nahli', 0),
 (79229, '12345672', '30', '4/6/2021', 20, 'Meditation', 'Anti Stress', 'montagne de boukarnin', 0),
 (85749, '12345672', '120', '3/17/2021', 20, 'Yoga', 'meditation ', 'Parc Marsa', 0),
@@ -70,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `article` (
   `date` varchar(255) NOT NULL,
   `article` varchar(255) NOT NULL,
   `id_user` varchar(255) NOT NULL,
-  `approuver` int(11) NOT NULL DEFAULT 0,
+  `approuver` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
@@ -133,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `commentaire` (
   `date` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `com1` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `commentaire`
@@ -267,7 +270,7 @@ CREATE TABLE IF NOT EXISTS `objectif` (
   `icone` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_objcli` (`idClient`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `objectif`
@@ -296,7 +299,7 @@ CREATE TABLE IF NOT EXISTS `objectif_pred` (
   `icone` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_ObjAd` (`idAdmin`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `objectif_pred`
@@ -316,27 +319,34 @@ INSERT INTO `objectif_pred` (`id`, `description`, `duree`, `idAdmin`, `icone`) V
 -- --------------------------------------------------------
 
 --
--- Structure de la table `participationactivté`
+-- Structure de la table `participationactivte`
 --
 
-DROP TABLE IF EXISTS `participationactivté`;
-CREATE TABLE IF NOT EXISTS `participationactivté` (
+DROP TABLE IF EXISTS `participationactivte`;
+CREATE TABLE IF NOT EXISTS `participationactivte` (
   `id` int(16) NOT NULL AUTO_INCREMENT,
   `id_client` varchar(255) NOT NULL,
   `id_activite` int(11) NOT NULL,
   `rating` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+  `aime` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `fk_cl` (`id_client`),
+  KEY `fk_acti` (`id_activite`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `participationactivté`
+-- Déchargement des données de la table `participationactivte`
 --
 
-INSERT INTO `participationactivté` (`id`, `id_client`, `id_activite`, `rating`) VALUES
-(5, '12345670', 1163, NULL),
-(6, '12345698', 30827, 4),
-(7, '12345698', 1163, 4),
-(8, '12345698', 1163, NULL);
+INSERT INTO `participationactivte` (`id`, `id_client`, `id_activite`, `rating`, `aime`) VALUES
+(5, '12345670', 1163, NULL, 0),
+(6, '12345698', 30827, 4, 0),
+(7, '12345698', 1163, 4, 0),
+(8, '12345698', 1163, NULL, 0),
+(9, '12341231', 12454, NULL, 0),
+(10, '12341231', 12454, NULL, 0),
+(11, '12341231', 1163, NULL, 0),
+(12, '12341231', 1163, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -350,17 +360,22 @@ CREATE TABLE IF NOT EXISTS `participationtherapie` (
   `id_client` varchar(255) NOT NULL,
   `id_therapie` int(11) NOT NULL,
   `rating` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+  `aime` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `fk_client` (`id_client`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `participationtherapie`
 --
 
-INSERT INTO `participationtherapie` (`id`, `id_client`, `id_therapie`, `rating`) VALUES
-(9, '12345670', 96425, NULL),
-(10, '12345698', 23313, NULL),
-(11, '12345698', 23313, NULL);
+INSERT INTO `participationtherapie` (`id`, `id_client`, `id_therapie`, `rating`, `aime`) VALUES
+(9, '12345670', 96425, NULL, 0),
+(10, '12345698', 23313, NULL, 0),
+(11, '12345698', 23313, NULL, 0),
+(12, '12341231', 1250, NULL, 0),
+(13, '12341231', 54, NULL, 0),
+(15, '12341231', 1250, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -374,11 +389,11 @@ CREATE TABLE IF NOT EXISTS `participation_challenge` (
   `id_challenge` int(16) NOT NULL,
   `id_client` varchar(255) NOT NULL,
   `etat` varchar(255) NOT NULL,
-  `nb_points` int(11) NOT NULL DEFAULT 0,
+  `nb_points` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_challenge_2` (`id_challenge`,`id_client`),
   KEY `id_client` (`id_client`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `participation_challenge`
@@ -405,8 +420,9 @@ CREATE TABLE IF NOT EXISTS `propoact` (
   `description` varchar(255) NOT NULL,
   `lieu` varchar(255) NOT NULL,
   `nombre_parti` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`),
+  KEY `idcoach` (`idcoach`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `propoact`
@@ -431,18 +447,19 @@ CREATE TABLE IF NOT EXISTS `proptherapie` (
   `nombremax` int(11) NOT NULL,
   `idcoach` varchar(255) NOT NULL,
   `nombre_parti` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`),
+  KEY `fk_coachth` (`idcoach`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `proptherapie`
 --
 
 INSERT INTO `proptherapie` (`id`, `sujet`, `date`, `lieu`, `nombremax`, `idcoach`, `nombre_parti`) VALUES
-(80265, 'Anxiete', '4/29/2021', 'La Soukra', 30, '12345672', 0),
 (64266, 'Stress ', '4/23/2021', 'Maison de jeunes Menzah 6', 15, '12345672', 0),
-(97645, 'chommage ', '4/9/2021', 'Ghazela', 25, '12345672', 0),
-(75595, 'Insomnie ', '4/27/2021', 'Esprit', 20, '12345672', 0);
+(75595, 'Insomnie ', '4/27/2021', 'Esprit', 20, '12345672', 0),
+(80265, 'Anxiete', '4/29/2021', 'La Soukra', 30, '12345672', 0),
+(97645, 'chommage ', '4/9/2021', 'Ghazela', 25, '12345672', 0);
 
 -- --------------------------------------------------------
 
@@ -477,7 +494,7 @@ CREATE TABLE IF NOT EXISTS `suivi` (
   PRIMARY KEY (`id`),
   KEY `fk_SuivCli` (`idClient`),
   KEY `fk_SuivObj` (`idObjectif`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `suivi`
@@ -524,8 +541,9 @@ CREATE TABLE IF NOT EXISTS `therapie` (
   `lieu` varchar(254) NOT NULL,
   `nombremax` int(11) NOT NULL,
   `idcoach` varchar(254) NOT NULL,
-  `nombre_parti` int(11) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`)
+  `nombre_parti` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `secondaire` (`idcoach`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -533,6 +551,7 @@ CREATE TABLE IF NOT EXISTS `therapie` (
 --
 
 INSERT INTO `therapie` (`id`, `sujet`, `date`, `lieu`, `nombremax`, `idcoach`, `nombre_parti`) VALUES
+(54, '55', '5', '545', 5, '12345672', 0),
 (1250, 'Accident Mortel', '4/16/2021', 'Maison de jeunes', 20, '12345672', 0),
 (5033, 'Depression', '4/21/2021', 'Maison de jeunes Soukra', 20, '12345672', 0),
 (20179, 'Accident de voiture', '25/03/2021', 'Maison de jeunes', 20, '12345672', 0),
@@ -629,11 +648,36 @@ ALTER TABLE `objectif_pred`
   ADD CONSTRAINT `fk_ObjAd` FOREIGN KEY (`idAdmin`) REFERENCES `user` (`id`);
 
 --
+-- Contraintes pour la table `participationactivte`
+--
+ALTER TABLE `participationactivte`
+  ADD CONSTRAINT `fk_acti` FOREIGN KEY (`id_activite`) REFERENCES `activite` (`id`),
+  ADD CONSTRAINT `fk_cl` FOREIGN KEY (`id_client`) REFERENCES `user` (`id`);
+
+--
+-- Contraintes pour la table `participationtherapie`
+--
+ALTER TABLE `participationtherapie`
+  ADD CONSTRAINT `fk_client` FOREIGN KEY (`id_client`) REFERENCES `user` (`id`);
+
+--
 -- Contraintes pour la table `participation_challenge`
 --
 ALTER TABLE `participation_challenge`
   ADD CONSTRAINT `id_challenge` FOREIGN KEY (`id_challenge`) REFERENCES `challenge` (`id`),
   ADD CONSTRAINT `id_client` FOREIGN KEY (`id_client`) REFERENCES `user` (`id`);
+
+--
+-- Contraintes pour la table `propoact`
+--
+ALTER TABLE `propoact`
+  ADD CONSTRAINT `fk_coach` FOREIGN KEY (`idcoach`) REFERENCES `user` (`id`);
+
+--
+-- Contraintes pour la table `proptherapie`
+--
+ALTER TABLE `proptherapie`
+  ADD CONSTRAINT `fk_coachth` FOREIGN KEY (`idcoach`) REFERENCES `user` (`id`);
 
 --
 -- Contraintes pour la table `reponse`
@@ -647,6 +691,12 @@ ALTER TABLE `reponse`
 ALTER TABLE `suivi`
   ADD CONSTRAINT `fk_SuivCli` FOREIGN KEY (`idClient`) REFERENCES `user` (`id`),
   ADD CONSTRAINT `fk_SuivObj` FOREIGN KEY (`idObjectif`) REFERENCES `objectif` (`id`);
+
+--
+-- Contraintes pour la table `therapie`
+--
+ALTER TABLE `therapie`
+  ADD CONSTRAINT `secondaire` FOREIGN KEY (`idcoach`) REFERENCES `user` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
