@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ObjectifPred
@@ -25,12 +26,14 @@ class ObjectifPred
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255, nullable=false)
+     * @Assert\NotBlank
+     * @Assert\Length(min=3)
      */
     private $description;
 
     /**
      * @var int
-     *
+     * @Assert\Positive
      * @ORM\Column(name="duree", type="integer", nullable=false)
      */
     private $duree;
@@ -69,7 +72,7 @@ class ObjectifPred
     }
 
     /**
-     * @return string
+     * @return string)
      */
     public function getDescription(): ?string
     {
@@ -87,7 +90,7 @@ class ObjectifPred
     /**
      * @return int
      */
-    public function getDuree(): int
+    public function getDuree(): ?int
     {
         return $this->duree;
     }
@@ -119,7 +122,7 @@ class ObjectifPred
     /**
      * @return User
      */
-    public function getIdadmin(): User
+    public function getIdadmin(): ?User
     {
         return $this->idadmin;
     }
@@ -130,6 +133,10 @@ class ObjectifPred
     public function setIdadmin(User $idadmin): void
     {
         $this->idadmin = $idadmin;
+    }
+    public function __toString(): string
+    {
+        return $this->description;
     }
 
 

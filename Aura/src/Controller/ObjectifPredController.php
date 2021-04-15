@@ -49,7 +49,7 @@ class ObjectifPredController extends AbstractController
             $em->persist($res);
             $em->flush();
             $this->addFlash('success', 'Objectif ajouté avec succès');
-            return $this->redirectToRoute("objectifs");
+            return $this->redirectToRoute("objectifspred");
         }
         return $this->render('objectif_pred/ajouterObjectifPred.html.twig', [
             'form' => $form->createView()
@@ -73,7 +73,7 @@ class ObjectifPredController extends AbstractController
         {
             $em->flush();
             $this->addFlash('success', 'Objectif modifié avec succès');
-            return $this->redirectToRoute('objectifs');
+            return $this->redirectToRoute('objectifspred');
         }
         return $this->render('objectif_pred/modifierObjectifPred.html.twig', [
             'form' => $form->createView()
@@ -93,7 +93,7 @@ class ObjectifPredController extends AbstractController
         {
             $em->persist($res);
             $em->flush();
-            return $this->redirectToRoute("objectifs");
+            return $this->redirectToRoute("objectifspred");
         }
         return  $this->render("objectif_pred/ajouterObjectifPred.html.twig",array('form'=>$form->createView()));
     }
@@ -109,7 +109,7 @@ class ObjectifPredController extends AbstractController
         $em->remove($id);
         $em->flush();
         $this->addFlash('success', 'Objectif supprimé avec succès');
-        return $this->redirectToRoute("objectifs");
+        return $this->redirectToRoute("objectifspred");
 
     }
 

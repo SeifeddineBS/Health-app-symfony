@@ -10,7 +10,7 @@
             </div>
         {% endfor %}
         <div class="text-right">
-            <a href="{{ path('ajouterObjectif')}}" class="btn btn-primary">Ajouter un objectif</a>
+            <a href="{{ path('ajouterObjectifPred')}}" class="btn btn-primary">Ajouter un objectif</a>
         </div>
         <table class="table table-striped">
             <thead>
@@ -25,10 +25,10 @@
                 <td>{{ objectif.description }}</td>
                 <td>{{ objectif.duree }}</td>
                 <td>
-                    <a href="{{ path('modifierObjectif', {id: objectif.id}) }}" class="btn btn-secondary">Modifier</a>
+                    <a href="{{ path('modifierObjectifPred', {id: objectif.id}) }}" class="btn btn-secondary">Modifier</a>
                 </td>
                 <td>
-                    <a href="{{ path('supprimerObjectif', {id: objectif.id}) }}" class="btn btn-danger" >Supprimer</a>
+                    <a href="{{ path('supprimerObjectifPred', {id: objectif.id}) }}" class="btn btn-danger" >Supprimer</a>
                 </td>
                 {% endfor %}
             </tbody>

@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
 /**
@@ -11,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="objectif", indexes={@ORM\Index(name="fk_objcli", columns={"idClient"})})
  * @ORM\Entity
+ * @Vich\Uploadable
  */
 class Objectif
 {
@@ -27,26 +30,27 @@ class Objectif
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255, nullable=false)
+     * @Assert\Length(min=3)
      */
     private $description;
 
     /**
      * @var int
-     *
+     * @Assert\Positive
      * @ORM\Column(name="reponse", type="integer", nullable=false)
      */
     private $reponse;
 
     /**
-     * @var string
-     *
+     * @Assert\Date
+     * @var date A "d/m/Y" formatted value
      * @ORM\Column(name="dateDebut", type="string", length=50, nullable=false)
      */
     private $datedebut;
 
     /**
      * @var int
-     *
+     * @Assert\Positive
      * @ORM\Column(name="duree", type="integer", nullable=false)
      */
     private $duree;
@@ -54,16 +58,34 @@ class Objectif
     /**
      * @var int
      *
-     * @ORM\Column(name="mailchecked", type="integer", nullable=false)
+     * @ORM\Column(name="mailchecked", type="integer", nullable=true)
      */
     private $mailchecked;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="icone", type="string", length=50, nullable=false)
+     * @ORM\Column(name="icone", type="string", length=50, nullable=true)
      */
     private $icone;
+
+    /**
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     * @var string
+     */
+    private $image;
+
+    /**
+     * @Vich\UploadableField(mapping="objectifs", fileNameProperty="image")
+     * @var File
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    private $updatedAt;
 
     /**
      * @var User
@@ -127,7 +149,7 @@ class Objectif
     }
 
     /**
-     * @return string
+     * @return date
      */
     public function getDatedebut(): ?string
     {
@@ -135,7 +157,7 @@ class Objectif
     }
 
     /**
-     * @param string $datedebut
+     * @param date $datedebut
      */
     public function setDatedebut(string $datedebut): void
     {
@@ -190,6 +212,41 @@ class Objectif
         $this->icone = $icone;
     }
 
+
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($image) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param string $icone
+     */
+    public function setImage(string $image): void
+    {
+        $this->icone = $image;
+    }
+
     /**
      * @return User
      */
@@ -205,6 +262,9 @@ class Objectif
     {
         $this->idclient = $idclient;
     }
-
+    public function __toString(): string
+    {
+        return 'oui';
+    }
 
 }

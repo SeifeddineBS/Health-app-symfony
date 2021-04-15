@@ -16,11 +16,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class ObjectifController extends AbstractController
 {
     /**
-     * @Route("/objectif", name="objectif")
+     * @Route("/agenda", name="agenda")
      */
     public function index(): Response
     {
-        return $this->render('objectif/index.html.twig', [
+        return $this->render('objectif/Agenda.html.twig', [
             'controller_name' => 'ObjectifController',
         ]);
     }
@@ -32,6 +32,29 @@ class ObjectifController extends AbstractController
 
         $res= $this->getDoctrine()->getRepository(Objectif::class)->findAll();
         return $this->render("objectif/index.html.twig",array('objectifs'=>$res));
+    }
+    /**
+     * @Route("/mesObjectifs", name="mesObjectifs")
+     */
+    public function afficherObjectifs()
+    {
+
+        $res= $this->getDoctrine()->getRepository(Objectif::class)->findAll();
+        return $this->render("objectif/afficherObjectif.html.twig",array('objectifs'=>$res));
+    }
+    /**
+     * @Route("/afficherDetailsObjectif/{id}", name="afficherDetailsObjectif")
+     */
+    public function afficherDetailsObjectif(Request $request, $id)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $objectif= $this->getDoctrine()->getRepository(Objectif::class)->find($id);
+
+        $res = $em->getRepository(Objectif::class)->find($id);
+
+        return $this->render('objectif/afficherDetailsObjectif.html.twig', [
+            'objectif' => $objectif
+        ]);
     }
 
     /**
@@ -75,7 +98,7 @@ class ObjectifController extends AbstractController
         {
             $em->flush();
             $this->addFlash('success', 'Objectif modifié avec succès');
-            return $this->redirectToRoute('objectifs');
+            return $this->redirectToRoute('mesObjectifs');
         }
         return $this->render('objectif/modifierObjectif.html.twig', [
             'form' => $form->createView()
@@ -91,16 +114,13 @@ class ObjectifController extends AbstractController
         //OjectifPredefini pour les avoir dans une combobox
         //$objectifPred= $this->getDoctrine()->getRepository(Objectif::class)->findAll();
         $form= $this->createForm(ObjectifType::class,$res);
-        $form->add("Book appoitment",SubmitType::class,['attr'=>[
-            'class'=>"site-btn"
-        ]]);
         $em=$this->getDoctrine()->getManager();
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
         {
             $em->persist($res);
             $em->flush();
-            return $this->redirectToRoute("objectifs");
+            return $this->redirectToRoute("mesObjectifs");
         }
         //return  $this->render("objectif/ajouterObjectif.html.twig",array("listObjectifPred"=>$objectifPred,'our_form'=>$form->createView()));
         return  $this->render("objectif/ajouterObjectif.html.twig",array('form'=>$form->createView()));
@@ -116,7 +136,7 @@ class ObjectifController extends AbstractController
         $em->remove($id);
         $em->flush();
         $this->addFlash('success', 'Objectif supprimé avec succès');
-        return $this->redirectToRoute("objectifs");
+        return $this->redirectToRoute("mesObjectifs");
 
     }
 }

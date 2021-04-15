@@ -15,7 +15,7 @@ class ObjectifPredType extends AbstractType
             ->add('description')
             ->add('duree')
             //->add('icone')
-            //->add('idadmin')
+            ->add('idadmin')
         ;
     }
 

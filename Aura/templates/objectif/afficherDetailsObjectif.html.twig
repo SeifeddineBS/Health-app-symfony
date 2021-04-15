@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+        <div class="breadcrumb-hero">
+            <div class="container">
+                <div class="breadcrumb-hero">
+                    <h2>Details de l'objectif</h2>
+                    <p>“Avoir des objectifs est non seulement nécessaire pour nous motiver, mais c’est essentiel pour que nous restions en vie.” </p>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <ol>
+                <li><a href="index.html">Home</a></li>
+                <li>Details de l'objectif</li>
+            </ol>
+        </div>
+    </section><!-- End Breadcrumbs -->
+
+    <!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+        <div class="container">
+
+            <div class="row gy-4">
+
+                <div class="col-lg-8">
+                    <div class="portfolio-details-slider swiper-container">
+                        <div class="swiper-wrapper align-items-center">
+
+                            <div class="swiper-slide">
+                                <img src="{{ objectif.image }}" alt="">
+                            </div>
+
+                            <div class="swiper-slide">
+                                <img src="{{ objectif.image }}" alt="">
+                            </div>
+
+                            <div class="swiper-slide">
+                                <img src="{{ objectif.image }}" alt="">
+                            </div>
+
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="portfolio-info">
+                        <h3>Informations sur l'objectif</h3>
+                        <ul>
+                            <li><strong>Description</strong>:{{objectif.description}}</li>
+                            <li><strong>Réponse</strong>:{{ objectif.reponse }}</li>
+                            <li><strong>Date de début</strong>:{{ objectif.dateDebut }}</li>
+                            <li><strong>Durée</strong>:{{ objectif.duree}}</li>
+                        </ul>
+                    </div>
+                    <div class="portfolio-description">
+                        <h2>Options</h2>
+                        <p>
+                            <a href="{{ path('modifierObjectif', {id: objectif.id}) }}" class="btn btn-secondary">Modifier</a>
+                            <a href="{{ path('supprimerObjectif', {id: objectif.id}) }}" class="btn btn-danger" >Supprimer</a>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section><!-- End Portfolio Details Section -->
+
+</main><!-- End #main -->
+{% endblock %}

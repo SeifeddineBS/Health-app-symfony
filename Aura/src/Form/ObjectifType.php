@@ -3,17 +3,27 @@
 namespace App\Form;
 
 use App\Entity\Objectif;
+use App\Entity\ObjectifPred;
+use phpDocumentor\Reflection\Types\String_;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\DomCrawler\Image;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ObjectifType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('description')
+            ->add('description', EntityType::class, [
+        'label' => 'Choisir un objectif',
+        'class' => ObjectifPred::class,
+    ])
             ->add('reponse', ChoiceType::class, [
                 'choices' => [
                     '1'=> 1,
@@ -49,14 +59,18 @@ class ObjectifType extends AbstractType
                 ]
             ])
             ->add('datedebut', null, [
-                'label' => 'Date de début'
+                'label' => 'Date de début',
+                'required' => false,
+                'widget' => 'single_text',
+
             ])
             ->add('duree', null, [
         'label' => 'Durée'
     ])
             ->add('mailchecked')
-            //->add('icone')
+            ->add('icone')
             ->add('idclient')
+            ->add('imageFile', VichImageType::class)
         ;
     }
 
