@@ -3,7 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Objectif;
+use App\Entity\Suivi;
 use App\Form\ObjectifType;
+use App\Form\SuiviType;
+use App\Repository\ObjectifRepository;
+use App\Repository\SuiviRepository;
 use phpDocumentor\Reflection\Type;
 use PhpParser\Builder\Property;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -45,15 +49,39 @@ class ObjectifController extends AbstractController
     /**
      * @Route("/afficherDetailsObjectif/{id}", name="afficherDetailsObjectif")
      */
-    public function afficherDetailsObjectif(Request $request, $id)
+    public function afficherDetailsObjectif(SuiviRepository $suivRepo, ObjectifRepository $objRepo,Request $request, $id)
     {
         $em=$this->getDoctrine()->getManager();
-        $objectif= $this->getDoctrine()->getRepository(Objectif::class)->find($id);
+        $objectifsss= $this->getDoctrine()->getRepository(Objectif::class)->find($id);
 
         $res = $em->getRepository(Objectif::class)->find($id);
+        $suivis = $suivRepo->findAll();
+        $suiviCount=[];
+        $suiviValeur=[];
+        $suiviCouleur=[];
+        foreach ($suivis as $suivi){
+            $suiviValeur[] = $suivi->getValeur();
+            $suiviCount[] =$suivi->getDate();
+            $suiviCouleur[] = $suivi->getColor();
+        }
+
+        $objectifs = $objRepo->countByDate();
+        $dates =[];
+        $objCount=[];
+
+        foreach ($objectifs as $objectif){
+            $dates[]= $objectif['datedebut'];
+            $objCount[] = $objectif['count'];
+        }
+
 
         return $this->render('objectif/afficherDetailsObjectif.html.twig', [
-            'objectif' => $objectif
+            'objectif' => $objectifsss,
+            'suiviValeur' => json_encode($suiviValeur),
+            'suiviCouleur' => json_encode($suiviCouleur),
+            'suiviCount' => json_encode($suiviCount),
+            'objCount' => json_encode($objCount),
+            'dates' => json_encode($dates)
         ]);
     }
 
@@ -104,6 +132,7 @@ class ObjectifController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
 
     /**
      * @Route("/ajouterObjectif", name="ajouterObjectif")

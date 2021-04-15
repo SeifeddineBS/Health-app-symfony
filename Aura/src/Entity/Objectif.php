@@ -10,9 +10,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Objectif
- *
  * @ORM\Table(name="objectif", indexes={@ORM\Index(name="fk_objcli", columns={"idClient"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\ObjectifRepository")
  * @Vich\Uploadable
  */
 class Objectif
@@ -264,7 +263,19 @@ class Objectif
     }
     public function __toString(): string
     {
-        return 'oui';
+        return $this->description;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
     }
 
 }

@@ -7,9 +7,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ObjectifPred
- *
  * @ORM\Table(name="objectif_pred", indexes={@ORM\Index(name="fk_ObjAd", columns={"idAdmin"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\ObjectifPredRepository")
  */
 class ObjectifPred
 {

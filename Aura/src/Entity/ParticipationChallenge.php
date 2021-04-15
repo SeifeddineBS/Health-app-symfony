@@ -55,5 +55,58 @@ class ParticipationChallenge
      */
     private $idClient;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getEtat(): ?string
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(string $etat): self
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
+
+    public function getNbPoints(): ?int
+    {
+        return $this->nbPoints;
+    }
+
+    public function setNbPoints(int $nbPoints): self
+    {
+        $this->nbPoints = $nbPoints;
+
+        return $this;
+    }
+
+    public function getIdChallenge(): ?Challenge
+    {
+        return $this->idChallenge;
+    }
+
+    public function setIdChallenge(?Challenge $idChallenge): self
+    {
+        $this->idChallenge = $idChallenge;
+
+        return $this;
+    }
+
+    public function getIdClient(): ?User
+    {
+        return $this->idClient;
+    }
+
+    public function setIdClient(?User $idClient): self
+    {
+        $this->idClient = $idClient;
+
+        return $this;
+    }
+
 
 }

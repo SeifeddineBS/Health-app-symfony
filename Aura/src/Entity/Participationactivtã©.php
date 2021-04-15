@@ -42,5 +42,46 @@ class Participationactivtã©
      */
     private $rating;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getIdClient(): ?string
+    {
+        return $this->idClient;
+    }
+
+    public function setIdClient(string $idClient): self
+    {
+        $this->idClient = $idClient;
+
+        return $this;
+    }
+
+    public function getIdActivite(): ?int
+    {
+        return $this->idActivite;
+    }
+
+    public function setIdActivite(int $idActivite): self
+    {
+        $this->idActivite = $idActivite;
+
+        return $this;
+    }
+
+    public function getRating(): ?int
+    {
+        return $this->rating;
+    }
+
+    public function setRating(?int $rating): self
+    {
+        $this->rating = $rating;
+
+        return $this;
+    }
+
 
 }

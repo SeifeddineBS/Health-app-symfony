@@ -55,5 +55,58 @@ class LigneClassement
      */
     private $idNiveau;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(int $position): self
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    public function getNbPoints(): ?int
+    {
+        return $this->nbPoints;
+    }
+
+    public function setNbPoints(int $nbPoints): self
+    {
+        $this->nbPoints = $nbPoints;
+
+        return $this;
+    }
+
+    public function getIdClient(): ?User
+    {
+        return $this->idClient;
+    }
+
+    public function setIdClient(?User $idClient): self
+    {
+        $this->idClient = $idClient;
+
+        return $this;
+    }
+
+    public function getIdNiveau(): ?Niveau
+    {
+        return $this->idNiveau;
+    }
+
+    public function setIdNiveau(?Niveau $idNiveau): self
+    {
+        $this->idNiveau = $idNiveau;
+
+        return $this;
+    }
+
 
 }

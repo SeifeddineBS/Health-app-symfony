@@ -42,5 +42,46 @@ class Participationtherapie
      */
     private $rating;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getIdClient(): ?string
+    {
+        return $this->idClient;
+    }
+
+    public function setIdClient(string $idClient): self
+    {
+        $this->idClient = $idClient;
+
+        return $this;
+    }
+
+    public function getIdTherapie(): ?int
+    {
+        return $this->idTherapie;
+    }
+
+    public function setIdTherapie(int $idTherapie): self
+    {
+        $this->idTherapie = $idTherapie;
+
+        return $this;
+    }
+
+    public function getRating(): ?int
+    {
+        return $this->rating;
+    }
+
+    public function setRating(?int $rating): self
+    {
+        $this->rating = $rating;
+
+        return $this;
+    }
+
 
 }

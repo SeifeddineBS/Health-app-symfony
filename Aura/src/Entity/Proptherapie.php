@@ -63,5 +63,82 @@ class Proptherapie
      */
     private $nombreParti;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getSujet(): ?string
+    {
+        return $this->sujet;
+    }
+
+    public function setSujet(string $sujet): self
+    {
+        $this->sujet = $sujet;
+
+        return $this;
+    }
+
+    public function getDate(): ?string
+    {
+        return $this->date;
+    }
+
+    public function setDate(string $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getLieu(): ?string
+    {
+        return $this->lieu;
+    }
+
+    public function setLieu(string $lieu): self
+    {
+        $this->lieu = $lieu;
+
+        return $this;
+    }
+
+    public function getNombremax(): ?int
+    {
+        return $this->nombremax;
+    }
+
+    public function setNombremax(int $nombremax): self
+    {
+        $this->nombremax = $nombremax;
+
+        return $this;
+    }
+
+    public function getIdcoach(): ?string
+    {
+        return $this->idcoach;
+    }
+
+    public function setIdcoach(string $idcoach): self
+    {
+        $this->idcoach = $idcoach;
+
+        return $this;
+    }
+
+    public function getNombreParti(): ?int
+    {
+        return $this->nombreParti;
+    }
+
+    public function setNombreParti(int $nombreParti): self
+    {
+        $this->nombreParti = $nombreParti;
+
+        return $this;
+    }
+
 
 }

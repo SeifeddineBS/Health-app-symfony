@@ -6,9 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Suivi
- *
  * @ORM\Table(name="suivi", indexes={@ORM\Index(name="fk_SuivObj", columns={"idObjectif"}), @ORM\Index(name="fk_SuivCli", columns={"idClient"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\SuiviRepository")
  */
 class Suivi
 {
@@ -56,9 +55,14 @@ class Suivi
     private $idobjectif;
 
     /**
+     * @ORM\Column(type="string", length=7, nullable=true)
+     */
+    private $color;
+
+    /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -74,7 +78,7 @@ class Suivi
     /**
      * @return int
      */
-    public function getValeur(): int
+    public function getValeur(): ?int
     {
         return $this->valeur;
     }
@@ -106,7 +110,7 @@ class Suivi
     /**
      * @return User
      */
-    public function getIdclient(): User
+    public function getIdclient(): ?User
     {
         return $this->idclient;
     }
@@ -122,7 +126,7 @@ class Suivi
     /**
      * @return Objectif
      */
-    public function getIdobjectif(): Objectif
+    public function getIdobjectif(): ?Objectif
     {
         return $this->idobjectif;
     }
@@ -133,6 +137,18 @@ class Suivi
     public function setIdobjectif(Objectif $idobjectif): void
     {
         $this->idobjectif = $idobjectif;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(?string $color): self
+    {
+        $this->color = $color;
+
+        return $this;
     }
 
 
