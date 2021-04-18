@@ -3,13 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Activite;
+use App\Entity\Participationactivte;
 use App\Entity\Propoact;
 use App\Entity\Therapie;
+use App\Entity\User;
 use App\Form\ActiviteType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 use Symfony\Component\Routing\Annotation\Route;use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 
@@ -196,9 +200,16 @@ class ActiviteController extends AbstractController
      */
     public function detailactclient(Activite $id)
     {
+        $s = $this->getDoctrine()->getRepository(Activite::class)->find($id);
+        $user=new User();
+        $user->setId("12345670");
+        $u = $this->getDoctrine()->getRepository(User::class)->find($user);
+
+
+            $r = $this->getDoctrine()->getRepository(Participationactivte::class)->findOneBy(array('idActivite'=>$s,'idClient'=>$u));
 
         $Propoacts= $this->getDoctrine()->getRepository(Activite::class)-> findBy(['id'=>$id->getId()]);
-        return $this->render("activite/detailactclient.html.twig",array('actclient'=>$Propoacts));
+        return $this->render("activite/detailactclient.html.twig",array('actclient'=>$Propoacts ,'clientdet'=>$r));
 
     }
 
@@ -233,6 +244,107 @@ class ActiviteController extends AbstractController
 
     }
 
+    /**
+     * @Route("/Like/{idact}/{iduser}", name="Like")
+     * @param $idact
+     * @param $iduser
+     * @param SessionInterface $session
+     * @return Response
+     */
+    public function Like($idact,$iduser,SessionInterface $session) : Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $Activite = $this->getDoctrine()->getRepository(Activite::class)->find($idact);
+        //$u = $this->getDoctrine()->getRepository(User::class)->find($iduser);
+        $u=new User();
+        $u->setId("12341231");
+        if ($Activite->isLikedBy($u))
+        {
+            $x = $this->getDoctrine()->getRepository(Participationactivte::class)->findOneBy(array('idActivite'=>$Activite,'User'=>$u,'aime'=>'like'));
+            $em ->remove($x);
+            $em ->flush();
+            return $this->json([
+                'code'=>200,
+                'likes'=>$this->getDoctrine()->getRepository(Participationactivte::class)->count(['idActivite'=>$Activite,'value'=>'like']),
+                'dislikes'=>$this->getDoctrine()->getRepository(Participationactivte::class)->count(['idActivite'=>$Activite,'value'=>'dislike']),
+                'idact'=>$idact
+            ],200);
+        }
+        elseif ($Activite->isDisLikedBy($u))
+        {
+            $x = $this->getDoctrine()->getRepository(Participationactivte::class)->findOneBy(array('idActivite'=>$Activite,'User'=>$u,'value'=>'dislike'));
+            $x->setValue('like');
+            $em ->flush();
+            return $this->json([
+                'code'=>200,
+                'likes' => $this->getDoctrine()->getRepository(Participationactivte::class)->count(['idActivite'=>$Activite,'value'=>'like']),
+                'dislikes'=>$this->getDoctrine()->getRepository(Participationactivte::class)->count(['idActivite'=>$Activite,'value'=>'dislike']),
+                'idact'=>$idact , 'path'=>$session->get('path'),'texte'=>$session->get('texte'),
+            ],200);
+        }
+        $l = new Participationactivte();
+        $l->setValue('like');
+        $l->setUser($u);
+        $l->setActivite($Activite);
+        $em->persist($l);
+        $em->flush();
+        return $this->json([
+            'code' => 200,
+            'likes' => $this->getDoctrine()->getRepository(Participationactivte::class)->count(['idActivite'=>$Activite,'value'=>'like']),
+            'dislikes'=>$this->getDoctrine()->getRepository(Participationactivte::class)->count(['idActivite'=>$Activite,'value'=>'dislike']),
+            'idact'=>$idact, 'path'=>$session->get('path'),'texte'=>$session->get('texte'),
+        ],200);
+
+    }
+    /**
+     * @Route("/AjouterNote/{idact}/{iduser}/{v}", name="AjouterNoteSujet")
+     */
+    public function AjouterNoteSujet($idact,$iduser,$v,SessionInterface $session)
+    {
+        $s = $this->getDoctrine()->getRepository(Activite::class)->find($idact);
+        $u = $this->getDoctrine()->getRepository(User::class)->find($iduser);
+        {
+            $em = $this->getDoctrine()->getManager();
+
+            $r = $this->getDoctrine()->getRepository(Participationactivte::class)->findOneBy(array('idActivite'=>$s,'idClient'=>$u));
+            $r->setRating($v);
+            $em->flush();
+            //return $this->json(['moyenne'=>$s->NoteSujetMoyenne(),'note'=>$v],200);
+            return $this->redirectToRoute("home");
+
+        }
+     /*   else
+        {
+            $em = $this->getDoctrine()->getManager();
+            $note = new Participationactivte();
+            $note->setIdClient($u);
+            $note->setIdActivite($s);
+            $note->setRating($v);
+            $em->persist($note);
+            $em->flush();
+           // return $this->json(['moyenne'=>$s->NoteSujetMoyenne(),'note'=>$v],200);
+            return $this->redirectToRoute("home");
+
+        }*/
+
+    }
+    /**
+     * @Route("/aimerAct/{idact}/{iduser}/{v}", name="aimerAct")
+     */
+    public function aimerAct($idact,$iduser,$v,SessionInterface $session)
+    {
+        $s = $this->getDoctrine()->getRepository(Activite::class)->find($idact);
+        $u = $this->getDoctrine()->getRepository(User::class)->find($iduser);
+        {
+            $em = $this->getDoctrine()->getManager();
+
+            $r = $this->getDoctrine()->getRepository(Participationactivte::class)->findOneBy(array('idActivite'=>$s,'idClient'=>$u));
+            $r->setAime($v);
+            $em->flush();
+            //return $this->json(['moyenne'=>$s->NoteSujetMoyenne(),'note'=>$v],200);
+            return $this->redirectToRoute("home");
+
+        }}
 
 
 

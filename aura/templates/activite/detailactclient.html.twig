@@ -135,11 +135,10 @@
 
 
 
-
                     <div class="portfolio-info">
                         <nav id="navbar" class="navbar">
                             <h3>Details</h3>
-                            <a href="{{ path("rejoindreact",{"id":activite.id}) }}" class="getstarted" >Rejoindre</a>
+                            <a  href="{{ path("rejoindreact",{"id":activite.id}) }}" class="getstarted"  data-toggle="modal" data-target="#confirm-delete">Rejoindre</a>
 
 
                         </nav>
@@ -153,12 +152,110 @@
                             <li><strong>Nombre max</strong>:{{ activite.nombremax}}</li>
                             <li><strong>Duree</strong>:{{ activite.duree}} min</li>
 
+
+
+
+
+
                         </ul>
+                        <div>
+                            <section>
+                                <fieldset class="rate">
+
+                                    <a href="{{path('AjouterNoteSujet',{idact:activite.id,iduser:"12345670",v:1})}}" class="xy"> <i class="bi bi-star"  data-index="1" title="1 stars" ></i>  </a>
+                                <a href="{{path('AjouterNoteSujet',{idact:activite.id,iduser:"12345670",v:2})}}" class="xy" ><i class="bi bi-star"  data-index="2" title="2 stars"  content="\f005" ></i> </a>
+                                <a href="{{path('AjouterNoteSujet',{idact:activite.id,iduser:"12345670",v:3})}}" class="xy"> <i class="bi bi-star"  data-index="3" title="3 stars" ></i>  </a>
+                                <a href="{{path('AjouterNoteSujet',{idact:activite.id,iduser:"12345670",v:4})}}" class="xy"><i class="bi bi-star"  data-index="4" title="4 stars" ></i></a>
+                                <a href="{{path('AjouterNoteSujet',{idact:activite.id,iduser:"12345670",v:5})}}" class="xy"><i class="bi bi-star"  data-index="5" title="5 stars"></i></a>
+                                </fieldset>
+
+                            </section>
+                            <section>
+                                <a href="{{path('aimerAct',{idact:activite.id,iduser:"12345670",v:1})}}" class="xy"><i class="bi bi-hand-thumbs-up"  data-index="1"  ></i></a>
+                                <a href="{{path('aimerAct',{idact:activite.id,iduser:"12345670",v:0})}}" class="xy"><i class="bi bi-hand-thumbs-down-fill"  data-index="0" ></i></a>
+                            </section>
+
+                            <fieldset class="rate">
+
+                                <input  type="radio" id="rating8" name="rating" value="5"  /> <label for="rating10" data-index="5" title="5 stars"></label>
+                                <input  type="radio" id="rating8" name="rating" value="4" /><label for="rating8"  data-index="4" title="4 stars"></label>
+                                <input  type="radio" id="rating6" name="rating" value="3" /><label for="rating6" data-index="3" title="3 stars"></label>
+                                <input  type="radio" id="rating4" name="rating" value="2" /><label for="rating4" data-index="2" title="2 stars"></label>
+                                <input  type="radio" id="rating2" name="rating" value="1" /><label for="rating2" data-index="1" title="1 star"></label>
+                            </fieldset>
+                            <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+                            <script
+                                    src="https://code.jquery.com/jquery-3.6.0.min.js"
+                                    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+                                    crossorigin="anonymous">
+                            </script>
+                            <script>
+                                $(document).ready(function ()
+                                {
+                                    $('.bi-star').css('color','grey')
+                                    {
+                                        $('.bi-star:eq('+0+')').css('color','gold');
+                                    }
+
+                                    $('.bi-star').mousemove(function ()
+                                    {
+                                        $('.bi-star').css('color','grey');
+                                        var curr = $(this).data('index');
+                                        for (i = 0 ; i <= curr; i++)
+                                            $('.bi-star:eq('+i+')').css('color','gold');
+                                    });
+
+                                    $('.bi-star').mouseleave(function ()
+                                    {
+                                        $('.fa-star').css('color','grey')
+
+                                        {
+                                            $('.bi-star:eq('+0+')').css('color','gold');
+                                        }
+                                    });
+                                    $('.bi-hand-thumbs-up').mousemove(function ()
+                                    {
+                                        $('.bi-hand-thumbs-up').css('color','grey');
+                                        var curr = $(this).data('index');
+                                        for (i = 0 ; i <= curr; i++)
+                                            $('.bi-hand-thumbs-up:eq('+i+')').css('color','blue');
+                                    });
+                                    $('.bi-hand-thumbs-up').mouseleave(function ()
+                                    {
+                                        $('.bi-hand-thumbs-up').css('color','grey')
+
+                                        {
+                                            $('.bi-hand-thumbs-up').css('color','grey');
+                                        }
+                                    });
+
+                                    $('.bi-hand-thumbs-down-fill').mousemove(function ()
+                                    {
+                                        $('.bi-hand-thumbs-down-fill').css('color','grey');
+                                        var curr = $(this).data('index');
+                                        for (i = 0 ; i <= curr; i++)
+                                            $('.bi-hand-thumbs-down-fill:eq('+i+')').css('color','red');
+                                    });
+                                    $('.bi-hand-thumbs-down-fill').mouseleave(function ()
+                                    {
+                                        $('.bi-hand-thumbs-down-fill').css('color','grey')
+
+                                        {
+                                            $('.bi-hand-thumbs-down-fill').css('color','grey');
+                                        }
+                                    });
+                                });
+
+
+                            </script>
+                        </div>
                     </div>
                     <div class="portfolio-description">
                         <h2>Description</h2>
                         <p>
                       {{ activite.description }}
+
 
                         </p>
                     </div>{% endfor %}

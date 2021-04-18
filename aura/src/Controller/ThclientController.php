@@ -31,7 +31,7 @@ class ThclientController extends AbstractController
         $Propoacts= $this->getDoctrine()->getRepository(Therapie::class)-> find($id);
         $actrejoindre=new Participationtherapie();
         $user=new User();
-        $user->setId("12341231");
+        $user->setId("12345670");
         $actrejoindre->setIdTherapie($Propoacts->getId());
         $actrejoindre->setIdClient($user);
 

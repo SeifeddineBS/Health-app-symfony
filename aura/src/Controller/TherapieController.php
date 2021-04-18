@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Participationtherapie;
 use App\Entity\Therapie;
+use App\Entity\User;
 use App\Form\TherapieType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 
@@ -120,7 +123,55 @@ class TherapieController extends AbstractController
     }
 
 
+/**
+* @Route("/AjouterNote/{idact}/{iduser}/{v}", name="AjouterNoteSujet")
+*/
+    public function AjouterNoteth($idact,$iduser,$v,SessionInterface $session)
+    {
+        $s = $this->getDoctrine()->getRepository(Therapie::class)->find($idact);
+        $u = $this->getDoctrine()->getRepository(User::class)->find($iduser);
+        {
+            $em = $this->getDoctrine()->getManager();
 
+            $r = $this->getDoctrine()->getRepository(Participationtherapie::class)->findOneBy(array('idTherapie'=>$s,'idClient'=>$u));
+            $r->setRating($v);
+            $em->flush();
+            //return $this->json(['moyenne'=>$s->NoteSujetMoyenne(),'note'=>$v],200);
+            return $this->redirectToRoute("home");
+
+        }
+        /*   else
+           {
+               $em = $this->getDoctrine()->getManager();
+               $note = new Participationactivte();
+               $note->setIdClient($u);
+               $note->setIdActivite($s);
+               $note->setRating($v);
+               $em->persist($note);
+               $em->flush();
+              // return $this->json(['moyenne'=>$s->NoteSujetMoyenne(),'note'=>$v],200);
+               return $this->redirectToRoute("home");
+
+           }*/
+
+    }
+    /**
+     * @Route("/aimerth/{idact}/{iduser}/{v}", name="aimerth")
+     */
+    public function aimerth($idact,$iduser,$v,SessionInterface $session)
+    {
+        $s = $this->getDoctrine()->getRepository(Therapie::class)->find($idact);
+        $u = $this->getDoctrine()->getRepository(User::class)->find($iduser);
+        {
+            $em = $this->getDoctrine()->getManager();
+
+            $r = $this->getDoctrine()->getRepository(Participationtherapie::class)->findOneBy(array('idTherapie'=>$s,'idClient'=>$u));
+            $r->setAime($v);
+            $em->flush();
+            //return $this->json(['moyenne'=>$s->NoteSujetMoyenne(),'note'=>$v],200);
+            return $this->redirectToRoute("home");
+
+        }}
 
 
 

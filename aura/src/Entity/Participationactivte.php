@@ -26,7 +26,7 @@ class Participationactivte
      *
      * @ORM\Column(name="rating", type="integer", nullable=true)
      */
-    private $rating;
+    private $rating= '0';
 
     /**
      * @var int|null
@@ -74,7 +74,7 @@ class Participationactivte
     /**
      * @return int|null
      */
-    public function getRating(): ?int
+    public function getRating()
     {
         return $this->rating;
     }
@@ -82,7 +82,7 @@ class Participationactivte
     /**
      * @param int|null $rating
      */
-    public function setRating(?int $rating): void
+    public function setRating(int $rating): void
     {
         $this->rating = $rating;
     }

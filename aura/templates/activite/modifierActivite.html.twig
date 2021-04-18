@@ -33,10 +33,14 @@
 <body>
 
 <div class="wrapper">
-    <div class="sidebar" data-color="purple" data-image="assets/img/sidebar-5.jpg">
+    <div class="sidebar" data-color="purple" data-image="../assets/img/sidebar-5.jpg">
 
-        <!--   you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple" -->
+        <!--
 
+            Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
+            Tip 2: you can also add an image using data-image tag
+
+        -->
 
         <div class="sidebar-wrapper">
             <div class="logo">
@@ -46,40 +50,40 @@
             </div>
 
             <ul class="nav">
-                <li>
+                <li class="active">
                     <a href="dashboard.html">
                         <i class="pe-7s-graph"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="active">
-                    <a href="user.html">
+                <li>
+                    <a href="ajouterActivite">
                         <i class="pe-7s-user"></i>
-                        <p>User Profile</p>
+                        <p>ajouter act</p>
                     </a>
                 </li>
                 <li>
-                    <a href="../listActivite">
+                    <a href="listActivite">
                         <i class="pe-7s-note2"></i>
-                        <p>Liste activite</p>
+                        <p>List activite</p>
                     </a>
                 </li>
                 <li>
-                    <a href="typography.html">
+                    <a href="listTherapie">
                         <i class="pe-7s-news-paper"></i>
-                        <p>Typography</p>
+                        <p>list therapie</p>
                     </a>
                 </li>
                 <li>
-                    <a href="icons.html">
+                    <a href="listPropoTherapie">
                         <i class="pe-7s-science"></i>
-                        <p>Icons</p>
+                        <p>propo th</p>
                     </a>
                 </li>
                 <li>
-                    <a href="maps.html">
+                    <a href="listPropoact">
                         <i class="pe-7s-map-marker"></i>
-                        <p>Maps</p>
+                        <p>propoact</p>
                     </a>
                 </li>
                 <li>
@@ -186,13 +190,141 @@
                     <div class="col-md-8">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title">Edit Profile</h4>
+                                <h4 class="title">modifier activite</h4>
                             </div>
-                            <div class="content">
 
-                                {{ form_start(our_form) }}
-                                {{ form_end(our_form) }}
+
+
+
+                        </div>
+                        <div class="content">
+
+
+                            <div class="col-md-5">
+                                <div class="form-group">
+
+                                    {{ form_start(our_form,{attr: {'novalidate': 'novalidate'}} ) }}
+
+
+
+                                    <div class="form-control" style="width:800px;text-align: center;height: auto">
+                                        {{ form_errors(our_form.date,{attr: {'novalidate': 'novalidate'}}) }}
+
+                                        <i class="fa fa-calendar"></i>
+
+                                        {{ form_label(our_form.date) }}
+
+                                        {{ form_widget(our_form.date,{attr: {'novalidate': 'novalidate'}}) }}
+
+                                        <small>{{ form_help(our_form.date,{attr: {'novalidate': 'novalidate'}}) }}</small>
+
+                                    </div>
+
+                                    <div class="form-control" style="width:800px;text-align: center;height: auto">
+                                        <div class="form-error">
+                                            {{ form_errors(our_form.type,{attr: {'novalidate': 'novalidate'}}) }}
+                                        </div>
+                                        <i class="fa form-check-input"></i>
+                                        {{ form_label(our_form.type) }}
+                                        {{ form_widget(our_form.type,{attr: {'novalidate': 'novalidate'}}) }}
+
+                                        <small>{{ form_help(our_form.type,{attr: {'novalidate': 'novalidate'}}) }}</small>
+
+
+                                    </div>
+
+                                    <div class="form-control" style="width:800px;text-align: center;height: auto">
+                                        <div class="form-error">
+                                            {{ form_errors(our_form.id,{attr: {'novalidate': 'novalidate'}}) }}
+                                        </div>
+                                        {{    form_label(our_form.id) }}
+                                        {{ form_widget(our_form.id,{attr: {'novalidate': 'novalidate'}}) }}
+
+                                        <small>{{ form_help(our_form.id,{attr: {'novalidate': 'novalidate'}}) }}</small>
+
+
+                                    </div>
+
+                                    <div class="form-control" style="width:800px;text-align: center;height: auto">
+                                        <div class="form-error">
+                                            {{ form_errors(our_form.description,{attr: {'novalidate': 'novalidate'}} ) }}
+                                        </div>                                        {{ form_label(our_form.description)}}
+                                        {{ form_widget(our_form.description,{attr: {'novalidate': 'novalidate'}}) }}
+
+                                        <small>{{ form_help(our_form.description,{attr: {'novalidate': 'novalidate'}} ) }}</small>
+
+
+                                    </div>
+
+                                    <div class="form-control" style="width:800px;text-align: center;height: auto">
+                                        <div class="form-error">
+                                            {{ form_errors(our_form.idcoach,{attr: {'novalidate': 'novalidate'}}) }}
+                                        </div>
+                                        <i class="fa form-check"></i>
+                                        {{ form_label(our_form.idcoach) }}
+                                        {{ form_widget(our_form.idcoach,{attr: {'novalidate': 'novalidate'}})  }}
+
+                                        <small>{{ form_help(our_form.idcoach,{attr: {'novalidate': 'novalidate'}}) }}</small>
+
+
+                                    </div>
+
+                                    <div class="form-control" style="width:800px;text-align: center;height: auto">
+                                        <div class="form-error">
+                                            {{ form_errors(our_form.nombremax,{attr: {'novalidate': 'novalidate'}}) }}
+                                        </div>
+                                        {{ form_label(our_form.nombremax) }}
+                                        {{ form_widget(our_form.nombremax,{attr: {'novalidate': 'novalidate'}}) }}
+
+                                        <small>{{ form_help(our_form.nombremax,{attr: {'novalidate': 'novalidate'}}) }}</small>
+
+
+                                    </div>
+
+                                    <div class="form-control" style="width:800px;text-align: center;height: auto">
+                                        <div class="form-error">
+                                            {{ form_errors(our_form.lieu,{attr: {'novalidate': 'novalidate'}}) }}
+                                        </div>
+                                        <i class="fa form-check-input"></i>
+                                        {{ form_label(our_form.lieu) }}
+                                        {{ form_widget(our_form.lieu,{attr: {'novalidate': 'novalidate'}}) }}
+
+                                        <small>{{ form_help(our_form.lieu,{attr: {'novalidate': 'novalidate'}}) }}</small>
+
+
+                                    </div>
+                                    <div class="form-control" style="width:800px;text-align: center;height: auto">
+                                        <div class="form-error">
+                                            {{ form_errors(our_form.duree,{attr: {'novalidate': 'novalidate'}}) }}
+                                        </div>
+                                        <i class="fa form-check-input"></i>
+                                        {{ form_label(our_form.duree) }}
+                                        {{ form_widget(our_form.duree,{attr: {'novalidate': 'novalidate'}}) }}
+
+                                        <small>{{ form_help(our_form.duree,{attr: {'novalidate': 'novalidate'}}) }}</small>
+
+
+                                    </div>
+
+
+
+
+
+                                    {{ form_end(our_form,{attr: {'novalidate': 'novalidate'}}) }}
+
+                                </div>
+                                <div class="form-group" >
+
+                                </div>
+                                <div class="form-group">
+
+
+                                </div>
+
+
                             </div>
+
+
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -203,7 +335,7 @@
                             <div class="content">
                                 <div class="author">
                                     <a href="#">
-                                        <img class="avatar border-gray" src="assets/img/faces/face-3.jpg" alt="..."/>
+                                        <img class="avatar border-gray" src="../assets/img/faces/face-3.jpg" alt="..."/>
 
                                         <h4 class="title">Mike Andrew<br />
                                             <small>michael24</small>
@@ -282,9 +414,9 @@
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
 
 <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-<script src="assets/js/light-bootstrap-dashboard.js?v=1.4.0"></script>
+<script src="../assets/js/light-bootstrap-dashboard.js?v=1.4.0"></script>
 
 <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
-<script src="assets/js/demo.js"></script>
+<script src="../assets/js/demo.js"></script>
 
 </html>

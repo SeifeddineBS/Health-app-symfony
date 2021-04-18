@@ -33,7 +33,7 @@ class ActclientController extends AbstractController
         $Propoacts= $this->getDoctrine()->getRepository(Activite::class)-> find($id);
         $actrejoindre=new participationactivte();
 $user=new User();
-$user->setId("12341231");
+$user->setId("12345670");
         $actrejoindre->setIdActivite($Propoacts);
         $actrejoindre->setIdClient($user);
 
@@ -45,8 +45,96 @@ $user->setId("12341231");
 
 
     }
+    /**
+     * @Route("/AddLike/{idact}/{iduser}", name="addLike")
+     */
+    public function addLike($idact,$iduser)
+    {
+        $c = $this->getDoctrine()->getRepository(Activite::class)->find($idact);
+        $u = $this->getDoctrine()->getRepository(User::class)->find($iduser);
+        $x = $this->getDoctrine()->getRepository(Participationactivte::class)->findOneBy(array('idActivite'=>$c,'User'=>$u,'value'=>'dislike'));
+        $em = $this->getDoctrine()->getManager();
+        if (empty($x))
+        {
+            $l = new Participationactivte();
+            $l->setIdActivite($c);
+            $l->setIdClient($u);
+            $l->setAime('like');
+            $em->persist($l);
+            $em->flush();
+        }
+        else
+        {
+            $em->remove($x);
+            $l = new Participationactivte();
+            $l->setIdActivite($c);
+            $l->setIdClient($u);
+            $l->setAime('like');
+            $em->persist($l);
+            $em->flush();
+        }
+        return $this->redirectToRoute("listactclient");
+    }
 
 
+
+    /**
+     * @Route("/DeleteLike/{idact}/{iduser}", name="DeleteLike")
+     */
+    public function DeleteLike($idact,$iduser)
+    {
+        $c = $this->getDoctrine()->getRepository(Activite::class)->find($idact);
+        $u = $this->getDoctrine()->getRepository(User::class)->find($iduser);
+        $l = $this->getDoctrine()->getRepository(Participationactivte::class)->findOneBy(array('idActivite'=>$c,'User'=>$u,'value'=>'like'));
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($l);
+        $em->flush();
+        return $this->redirectToRoute("listactclient");
+    }
+    /**
+     * @Route("/AddDislike/{idact}/{iduser}", name="addDislike")
+     */
+    public function addDislike($idact,$iduser)
+    {
+        $c = $this->getDoctrine()->getRepository(Activite::class)->find($idact);
+        $u = $this->getDoctrine()->getRepository(User::class)->find($iduser);
+        $x = $this->getDoctrine()->getRepository(Participationactivte::class)->findOneBy(array('idActivite'=>$c,'User'=>$u,'value'=>'like'));
+        $em = $this->getDoctrine()->getManager();
+        if (empty($x))
+        {
+            $l = new Participationactivte();
+            $l->setIdActivite($c);
+            $l->setIdClient($u);
+            $l->setAime('dislike');
+            $em->persist($l);
+            $em->flush();
+        }
+        else
+        {
+            $em->remove($x);
+            $l = new Participationactivte();
+            $l->setIdActivite($c);
+            $l->setIdClient($u);
+            $l->setAime('dislike');
+            $em->persist($l);
+            $em->flush();
+        }
+        return $this->redirectToRoute("listactclient");
+    }
+
+    /**
+     * @Route("/DeleteDislike/{idact}/{iduser}", name="DeleteDislike")
+     */
+    public function DeleteDislike($idact,$iduser)
+    {
+        $c = $this->getDoctrine()->getRepository(Activite::class)->find($idact);
+        $u = $this->getDoctrine()->getRepository(User::class)->find($iduser);
+        $l = $this->getDoctrine()->getRepository(Participationactivte::class)->findOneBy(array('idActivite'=>$c,'User'=>$u,'value'=>'dislike'));
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($l);
+        $em->flush();
+        return $this->redirectToRoute("listactclient");
+    }
 
 
 
