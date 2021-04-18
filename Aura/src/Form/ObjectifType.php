@@ -67,10 +67,14 @@ class ObjectifType extends AbstractType
             ->add('duree', null, [
         'label' => 'Durée'
     ])
-            ->add('mailchecked')
-            ->add('icone')
+            //S->add('mailchecked')
+            //->add('icone')
             ->add('idclient')
-            ->add('imageFile', VichImageType::class)
+            ->add('imageFile', VichImageType::class, [
+                'required' => false,
+                'download_link' => false,
+                'image_uri' => false
+            ])
         ;
     }
 

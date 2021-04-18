@@ -40,10 +40,13 @@ class ObjectifController extends AbstractController
     /**
      * @Route("/mesObjectifs", name="mesObjectifs")
      */
-    public function afficherObjectifs()
+    public function afficherObjectifs(Request $request)
     {
-
         $res= $this->getDoctrine()->getRepository(Objectif::class)->findAll();
+        if($request->isMethod("POST")){
+            $desc =$request->get('description');
+            $res= $this->getDoctrine()->getRepository(Objectif::class)->findBy(array('description'=>$desc));
+        }
         return $this->render("objectif/afficherObjectif.html.twig",array('objectifs'=>$res));
     }
     /**
@@ -168,4 +171,36 @@ class ObjectifController extends AbstractController
         return $this->redirectToRoute("mesObjectifs");
 
     }
+
+    /**
+     * @Route("/triObjectifDesc", name="triObjectifDesc")
+     */
+    public function triObjectifDesc()
+    {
+
+        $res= $this->getDoctrine()->getRepository(Objectif::class)->listObjOrderByDesc();
+        return $this->render("objectif/AfficherObjectif.html.twig",array('objectifs'=>$res));
+    }
+
+    /**
+     * @Route("/triObjectifRep", name="triObjectifRep")
+     */
+    public function triObjectifRep()
+    {
+
+        $res= $this->getDoctrine()->getRepository(Objectif::class)->listObjOrderByRep();
+        return $this->render("objectif/AfficherObjectif.html.twig",array('objectifs'=>$res));
+    }
+
+    /**
+     * @Route("/triObjectifDate", name="triObjectifDate")
+     */
+    public function triObjectifDate()
+    {
+
+        $res= $this->getDoctrine()->getRepository(Objectif::class)->listObjOrderByDate();
+        return $this->render("objectif/AfficherObjectif.html.twig",array('objectifs'=>$res));
+    }
+
+
 }

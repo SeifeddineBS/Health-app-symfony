@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Suivi
@@ -28,8 +30,8 @@ class Suivi
     private $valeur;
 
     /**
-     * @var string
-     *
+     * @Assert\Date
+     * @var date A "d/m/Y" formatted value
      * @ORM\Column(name="date", type="string", length=50, nullable=false)
      */
     private $date;
@@ -92,7 +94,7 @@ class Suivi
     }
 
     /**
-     * @return string
+     * @return date
      */
     public function getDate(): ?string
     {
@@ -100,7 +102,7 @@ class Suivi
     }
 
     /**
-     * @param string $date
+     * @param date $date
      */
     public function setDate(string $date): void
     {

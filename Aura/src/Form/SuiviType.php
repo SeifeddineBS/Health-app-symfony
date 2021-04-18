@@ -51,7 +51,12 @@ class SuiviType extends AbstractType
                 ]
             ])
             ->add('color', ColorType::class)
-            ->add('date')
+            ->add('date', null, [
+                'label' => 'Date',
+                'required' => false,
+                'widget' => 'single_text',
+
+            ])
             ->add('idclient')
             ->add('idobjectif', null, array(
                 'empty_data' => '50'

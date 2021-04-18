@@ -23,17 +23,17 @@
 
 
     <div class="container mt -4">
-        {{ form_start(form) }}
+        {{ form_start(form, {attr: {'novalidate': 'novalidate'}}) }}
         <div class="row">
-            <div class="col-md-9"> {{ form_row(form.description) }}</div>
+            <div class="col-md-8"> {{ form_row(form.description) }}</div>
         </div>
         <div class="row">
-            <div class="col-md-3"> {{ form_row(form.reponse) }}</div>
-            <div class="col-md-3"> {{ form_row(form.duree) }}</div>
-            <div class="col-md-3"> {{ form_row(form.datedebut) }}</div>
+            <div class="col-md-2"> {{ form_row(form.reponse) }}</div>
+            <div class="col-md-2"> {{ form_row(form.duree) }}</div>
+            <div class="col-md-2"> {{ form_row(form.datedebut) }}</div>
+            <div class="col-md-2"> {{ form_row(form.idclient) }}</div>
         </div>
         <div class="row">
-            <div class="col-md-3"> {{ form_row(form.idclient) }}</div>
         </div>
         {{ form_rest(form) }}
         <br>

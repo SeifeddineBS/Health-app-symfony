@@ -19,6 +19,19 @@ class ObjectifPredRepository extends ServiceEntityRepository
         parent::__construct($registry, ObjectifPred::class);
     }
 
+    public function listObjOrderByDuree()
+    {
+        return $this->createQueryBuilder('s')
+            ->orderBy('s.duree','DESC ')
+            ->getQuery()->getResult();
+    }
+    public function listObjOrderByDesc()
+    {
+        return $this->createQueryBuilder('s')
+            ->orderBy('s.description','DESC ')
+            ->getQuery()->getResult();
+    }
+
     // /**
     //  * @return ObjectifPred[] Returns an array of ObjectifPred objects
     //  */

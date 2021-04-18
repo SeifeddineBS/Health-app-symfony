@@ -30,6 +30,25 @@ class ObjectifRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
+    public function listObjOrderByDesc()
+    {
+        return $this->createQueryBuilder('s')
+            ->orderBy('s.description','DESC ')
+            ->getQuery()->getResult();
+    }
+    public function listObjOrderByRep()
+    {
+        return $this->createQueryBuilder('s')
+            ->orderBy('s.reponse','DESC ')
+            ->getQuery()->getResult();
+    }
+    public function listObjOrderByDate()
+    {
+        return $this->createQueryBuilder('s')
+            ->orderBy('s.datedebut','DESC ')
+            ->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Objectif[] Returns an array of Objectif objects
     //  */

@@ -11,8 +11,13 @@
         {% endfor %}
         <div class="text-right">
             <a href="{{ path('ajouterObjectifPred')}}" class="btn btn-primary">Ajouter un objectif</a>
+            <button id="button" type="button" class="btn btn-outline-default btn-rounded waves-effect">	<a href="{{ 'triObjectifPredRep' }}"  class="at-linkactive">Trier par réponse </a></button>
+            <button id="button" type="button" class="btn btn-outline-default btn-rounded waves-effect">	<a href="{{ 'triObjectifPredDesc' }}"  class="at-linkactive">Trier par description </a></button>
+            <input type="text" id="search" class="form-control" placeholder="Search">
         </div>
-        <table class="table table-striped">
+        <div id="Table">
+        <table id="tableObj" class="table table-striped">
+            <script src="{{ asset('/assets/js/jquery-3.3.1.min.js') }}"></script>
             <thead>
             <tr>
                 <th>Description</th>
@@ -33,6 +38,34 @@
                 {% endfor %}
             </tbody>
         </table>
-
+        </div>
     </div>
+{% endblock %}
+{% block js %}
+    <script>
+        $(document).ready(function(){
+            $('#search').keyup(function(){
+                search_table($(this).val());
+            });
+            function search_table(value){
+                $('#tableObj tbody tr').each(function(){
+                    var found = 'false';
+                    $(this).each(function(){
+                        if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)
+                        {
+                            found = 'true';
+                        }
+                    });
+                    if(found == 'true')
+                    {
+                        $(this).show();
+                    }
+                    else
+                    {
+                        $(this).hide();
+                    }
+                });
+            }
+        });
+    </script>
 {% endblock %}

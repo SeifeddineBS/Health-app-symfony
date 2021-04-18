@@ -97,8 +97,6 @@ class Objectif
     private $idclient;
 
 
-
-
     /**
      * @return int
      */
@@ -277,5 +275,6 @@ class Objectif
 
         return $this;
     }
+
 
 }

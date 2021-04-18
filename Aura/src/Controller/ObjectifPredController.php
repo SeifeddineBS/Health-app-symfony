@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Objectif;
 use App\Entity\ObjectifPred;
+use App\Form\MailObjectifType;
 use App\Form\ObjectifPredType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -111,6 +113,62 @@ class ObjectifPredController extends AbstractController
         $this->addFlash('success', 'Objectif supprimé avec succès');
         return $this->redirectToRoute("objectifspred");
 
+    }
+
+    /**
+     * @Route("/objectifsClients", name="objectifsClients")
+     */
+    public function objectifsClients(Request $request)
+    {
+        $res= $this->getDoctrine()->getRepository(Objectif::class)->findAll();
+        if($request->isMethod("POST")){
+            $desc =$request->get('description');
+            $res= $this->getDoctrine()->getRepository(Objectif::class)->findBy(array('description'=>$desc));
+        }
+        return $this->render("objectif_pred/objectifsClients.html.twig",array('objectifs'=>$res));
+    }
+
+    /**
+     * @Route("/mailObjectif", name="mailObjectif")
+     */
+    public function mailObjectif(Request $request, \Swift_Mailer $mailer)
+    {
+        $form = $this->createForm(MailObjectifType::class);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $contact = $form->getData();
+            $message = (new \Swift_Message('Bravoooo!!!!!! Vous avez terminé cet objectif.'))
+            ->setFrom($contact['email'])
+                ->setTo('chirinenasri13@gmail.com')
+                ->setBody(
+                    $this->renderView(
+                        'objectif_pred/mailContact.html.twig', compact('contact')
+                    ),
+                    'text/html'
+                );
+            $mailer->send($message);
+            return $this->redirectToRoute("objectifsClients");
+        }
+        return $this->render("objectif_pred/mailObjectif.html.twig",array('MailObjectifForm'=>$form->createView()));
+    }
+
+    /**
+     * @Route("/triObjectifPredRep", name="triObjectifPredRep")
+     */
+    public function triObjectifPredRep()
+    {
+
+        $res= $this->getDoctrine()->getRepository(ObjectifPred::class)->listObjOrderByDuree();
+        return $this->render("objectif_pred/index.html.twig",array('objectifs'=>$res));
+    }
+    /**
+     * @Route("/triObjectifPredDesc", name="triObjectifPredDesc")
+     */
+    public function triObjectifPredDesc()
+    {
+
+        $res= $this->getDoctrine()->getRepository(ObjectifPred::class)->listObjOrderByDesc();
+        return $this->render("objectif_pred/index.html.twig",array('objectifs'=>$res));
     }
 
 }
