@@ -3,6 +3,7 @@
 namespace App\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints\Date;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -37,8 +38,12 @@ class Activite
     private $duree;
 
     /**
-     * @var string
-     *@Assert\NotBlank(message="le champs date est obligatoire * ")
+     *
+     * @Assert\Date
+     *
+     * @var date A "d/m/Y" formatted value
+     * @Assert\GreaterThanOrEqual("2021-04-19")
+     *@Assert\NotBlank(message="le champs date est obligatoire  ")
      * @ORM\Column(name="date", type="string", length=255, nullable=false)
      */
     private $date;
@@ -120,7 +125,7 @@ class Activite
     }
 
     /**
-     * @return string
+     * @return date
      */
     public function getDate(): ?string
     {
@@ -128,7 +133,7 @@ class Activite
     }
 
     /**
-     * @param string $date
+     * @param date $date
      */
     public function setDate(string $date): void
     {

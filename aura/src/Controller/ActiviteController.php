@@ -6,8 +6,12 @@ use App\Entity\Activite;
 use App\Entity\Participationactivte;
 use App\Entity\Propoact;
 use App\Entity\Therapie;
+use App\Data\SearchData;
+use App\Form\SearchForm;
+
 use App\Entity\User;
 use App\Form\ActiviteType;
+use App\Repository\ActiviteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,8 +28,10 @@ class ActiviteController extends AbstractController
      */
     public function index(): Response
     {
+
         return $this->render('activite/index.html.twig', [
             'controller_name' => 'ActiviteController',
+
         ]);
     }
 
@@ -192,7 +198,6 @@ class ActiviteController extends AbstractController
         $Propoact= $this->getDoctrine()->getRepository(Therapie::class)->findAll();
 
         return $this->render("Activite/afficherclientActivite.html.twig",array('actclient'=>$Propoacts,'thclient'=>$Propoact));
-
     }
 
     /**
@@ -345,8 +350,32 @@ class ActiviteController extends AbstractController
             return $this->redirectToRoute("home");
 
         }}
+    /**
+     * @Route("/searchAct", name="searchAct")
+     */
 
+    public function searchAct(ActiviteRepository $repository , Request $request)
+    {
+        $data=$request->get('search');
+        $commande=$repository->rechercher($data);
+        return $this->render("activite/findclientActivite.html.twig",array('actclient'=>$commande));
 
+    }
 
+    /**
+     * @Route("/filtreAct", name="filtreAct")
+     */
+
+    public function filtreAct(ActiviteRepository $repository , Request $request)
+    {
+        $data = new SearchData();
+        $form = $this->createForm(SearchForm::class, $data);
+        $form->handleRequest($request);
+        $articles = $repository->findSearch($data);
+        return $this->render('activite/filterclientActivite.html.twig', [
+            'actclient' => $articles,
+            'form' => $form->createView()
+        ]);
+    }
 
 }

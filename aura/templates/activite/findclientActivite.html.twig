@@ -100,8 +100,7 @@
             <div >
                 <form method="post" action="{{ path('searchAct') }}" class="search-form">
 
-                    <input  class="form-control mr-sm-2" type="text" name="search" placeholder="Search ..." aria-label="Search"  >
-                    <input type="submit" value="Recherche" class="btn btn-info">
+                    <input   class="form-control mr-sm-2" type="text" name="search" placeholder="Search ..." aria-label="Search"  >
 
                 </form>
             </div>
@@ -141,25 +140,6 @@
                         </div>
                     </div>
                 </div>
-                {% endfor %}
-
-                {% for activite in thclient %}
-
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-                        <div class="portfolio-wrap">
-                            <img src="assets/img/portfolio/portfolio-2.jpg" class="img-fluid" alt="">
-                            <div class="portfolio-info">
-                                <h4>{{ activite.sujet }}</h4>
-
-                                <p>{{ activite.date }}</p>
-                                <div class="portfolio-links">
-                                    <a href="assets/img/portfolio/portfolio-4.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title=""><i class="bx bx-plus"></i></a>
-                                    <a href="{{ path("detailthclient",{"id":activite.id}) }}" title="More Details"><i class="bx bx-link"></i></a>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 {% endfor %}
 
 
