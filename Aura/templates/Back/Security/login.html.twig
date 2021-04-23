@@ -1,0 +1,56 @@
+{% extends 'Back/base.html.twig' %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block content %}
+
+
+    <link href={{ asset('assets/css/CreateAccountstyle.css') }} rel="stylesheet">
+<div style="padding:70px">
+
+
+
+    <section class="sign-in">
+        <div class="container">
+            <div class="signin-content">
+                <div class="signin-image">
+                    <figure><img src={{ asset('assets/img/CreateAccount/signin-image.jpg')}} alt="sing up image"></figure>
+
+                </div>
+
+
+
+                <div class="signin-form">
+                    <h2 class="form-title">Sign up</h2>
+                    <form action="{{ path('loginBack') }}" method="POST">
+                        <div class="form-group">
+                            <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <input type="text" name="_username" value="{{ last_id }}" placeholder="Username here ...">
+                        </div>
+                        <div class=sym"form-group">
+                            <label><i class="zmdi zmdi-lock"></i></label>
+                            <input type="password" name="_password"  placeholder="Password"/>
+                            {% if error  %}
+                                <span style ="color:red" class=""error>Veuillez verifier vos données</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group form-button">
+                            <button type="submit" name="signin" id="signin" class="form-submit" value="Se Connecter"/>Se connecter </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+{% endblock %}
+
+
+
+{% block footer %}
+{% endblock %}
