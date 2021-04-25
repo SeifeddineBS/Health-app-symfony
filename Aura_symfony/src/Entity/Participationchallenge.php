@@ -4,11 +4,13 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
+
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ParticipationChallengeRepository")
- *  @ORM\Table(name="`participation_challenge`")
+ * @ORM\Entity
+ * @ORM\Table(name="`participation_challenge`")
  */
-class ParticipationChallenge
+class Participationchallenge
 {
     /**
      * @ORM\Id()
@@ -18,24 +20,29 @@ class ParticipationChallenge
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(name="id_challenge",type="integer")
+     * @Assert\NotBlank
+     * @ORM\ManyToOne(targetEntity="Challenge")
+     * @ORM\JoinColumns({
+     * @ORM\JoinColumn(name="id_challenge", referencedColumnName="id")})
+     */
+    private $idChallenge;
+
+    /**
+     * @ORM\Column(name="id_client",type="string", length=255)
      * @Assert\NotBlank
      * @Assert\Length(max=8)
      */
     private $idClient;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Assert\NotBlank
-     */
-    private $idChallenge;
+    
 
     /**
-     * @ORM\Column(type="string", length=255 , nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $etat;
 
-     
+    
 
 
 
@@ -56,24 +63,12 @@ class ParticipationChallenge
         return $this;
     }
 
-    public function getIdNiveau(): ?int
-    {
-        return $this->idNiveau;
-    }
-
-    public function setIdNiveau(int $idNiveau): self
-    {
-        $this->idNiveau = $idNiveau;
-
-        return $this;
-    }
-
-    public function getIdChallenge(): ?int
+    public function getIdChallenge(): ?string
     {
         return $this->idChallenge;
     }
 
-    public function setIdChallenge(int $idChallenge): self
+    public function setIdChallenge(string $idChallenge): self
     {
         $this->idChallenge = $idChallenge;
 
@@ -92,3 +87,10 @@ class ParticipationChallenge
         return $this;
     }
 }
+
+
+
+
+
+
+

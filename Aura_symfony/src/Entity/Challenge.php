@@ -34,13 +34,13 @@ class Challenge
     private $type;
 
      /**
-     * @ORM\Column(name="description", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="description", type="text")
      *  @Assert\NotBlank
      */
     private $description;
 
      /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(name="img" ,type="string", length=255)
      */
     private $img;
 
@@ -71,7 +71,6 @@ class Challenge
     /**
      * 
      * @ORM\Column(type="integer")
-     *
      * @ORM\ManyToOne(targetEntity="Niveau")
      * @ORM\JoinColumns({
      * @ORM\JoinColumn(name="id_niveau", referencedColumnName="id")})
