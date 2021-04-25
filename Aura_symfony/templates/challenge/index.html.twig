@@ -3,7 +3,7 @@
 
 {% block body %}
 
- {% if challenges %}
+ {% if challengerejoints %}
     <table id="articles" class="table table-striped">
       <thead>
         <tr>
@@ -19,23 +19,24 @@
         </tr>
       </thead>
       <tbody>
-        {% for challenge in challenges %}
+        {% for challengerejoint in challengerejoints %}
           <tr>
-            <td>{{ challenge.titre }}</td>
-            <td>{{ challenge.type }}</td>
-            <td>{{ challenge.description }}</td>
-           <td>{{ challenge.dateDebut|date('d/m/Y') }}</td>
-           <td>{{ challenge.dateFin|date('d/m/Y') }}</td>
+           <td>{{ challengerejoint.titre }}</td>
+            <td>{{ challengerejoint.type }}</td>
+            <td>{{ challengerejoint.description }}</td>
+           <td>{{ challengerejoint.dateDebut|date('d/m/Y') }}</td>
+           <td>{{ challengerejoint.dateFin|date('d/m/Y') }}</td>
             
             
-            <td>{{ challenge.idNiveau }}</td>
+            
+            <td>{{ challengerejoint.idNiveau }}</td>
 
             
            <td>
-              <a href="/challenge/{{ challenge.id }}" class="btn btn-dark">Détails</a>
-              <a href="/challenge/edit/{{ challenge.id }}" class="btn btn-dark">Modifier</a>
+              <a href="/challenge/{{ challengerejoint.id }}" class="btn btn-dark">Détails</a>
+              <a href="/challenge/edit/{{ challengerejoint.id }}" class="btn btn-dark">Modifier</a>
                
-              <a href="/challenge/delete/{{ challenge.id }}" class="btn btn-danger" 
+              <a href="/challenge/delete/{{ challengerejoint.id }}" class="btn btn-danger" 
               onclick="return confirm('Etes-vous sûr de supprimer cet article?');">Supprimer</a>
             </td>
           </tr>
@@ -46,6 +47,8 @@
     <p>Aucun challenges</p>
   {% endif %} 
   <a href="/challenge/new/" class="btn btn-dark">créer</a>
+    <a href="/challenge/afficheChallenge/" class="btn btn-dark">affiche</a>
+
    <a href="/classement/home/" class="btn btn-dark">classement</a>
        <a href="/niveau/home/" class="btn btn-dark">niveau</a>
-{% endblock %}
+{% endblock body %}

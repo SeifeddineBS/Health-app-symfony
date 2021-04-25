@@ -1,10 +1,11 @@
+
 {% extends 'base.html.twig' %}
 
 {% block title %}
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Portfolio Details - Serenity Bootstrap Template</title>
+  <title>Portfolio - Serenity Bootstrap Template</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -34,14 +35,12 @@
   ======================================================== -->
 
 
-
-
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between">
 
       <div class="logo">
-        <h1 class="text-light"><a href="index.html">Aura</a></h1>
+        <h1 class="text-light"><a href="index.html">Serenity</a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
       </div>
@@ -79,85 +78,89 @@
   </header><!-- End Header -->
 {% endblock %}
 
-
 {% block body %}
   <main id="main">
 
-        <!-- ======= Breadcrumbs ======= -->
-        <section id="breadcrumbs" class="breadcrumbs">
-            <div class="breadcrumb-hero">
-                <div class="container">
-                    <div class="breadcrumb-hero">
-                        <h2>Challenge Details</h2>
-                        <p>Est dolorum ut non facere possimus quibusdam eligendi voluptatem. Quia id aut similique quia voluptas sit quaerat debitis. Rerum omnis ipsam aperiam consequatur laboriosam nemo harum praesentium. </p>
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <ol>
-                    <li><a href="index.html">Home</a></li>
-                    <li>Challenge Details</li>
-                </ol>
-            </div>
-        </section><!-- End Breadcrumbs -->
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="breadcrumb-hero">
+        <div class="container">
+          <div class="breadcrumb-hero">
+            <h2>Nos Challenges</h2>
+            <p>Est dolorum ut non facere possimus quibusdam eligendi voluptatem. Quia id aut similique quia voluptas sit quaerat debitis. Rerum omnis ipsam aperiam consequatur laboriosam nemo harum praesentium. </p>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <ol>
+          <li><a href="index.html">Home</a></li>
+          <li>Challenges</li>
+        </ol>
+        <div class="container align-center">
+          <div class="row" >
+            <div class="col-md-3">
+            <div align="center">
 
-        <!-- ======= Portfolio Details Section ======= -->
-        <section id="portfolio-details" class="portfolio-details">
-            <div class="container">
-
-                <div class="row gy-4">
-
-                    <div class="col-lg-8">
-                        <div class="portfolio-details-slider swiper-container">
-                            <div class="swiper-wrapper align-items-center">
-
-                                <div class="swiper-slide">
-                                  <img src="/front/assets/img/portfolio/portfolio-details-1.jpg" alt="">
-                                </div>
-
-                                <div class="swiper-slide">
-                                  <img src="/front/assets/img/portfolio/portfolio-details-2.jpg" alt="">
-                                </div>
-
-                                <div class="swiper-slide">
-                                  <img src="/front/assets/img/portfolio/portfolio-details-3.jpg" alt="">
-                                </div>
-
-                            </div>
-                            <div class="swiper-pagination"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4">
-                        <div class="portfolio-info">
-                            <h3>Challenge:{{ challenge.titre }}</h3>
-                            
-                            <ul>
-                                <li><strong>Niveau</strong>: {{challenge.idNiveau }}</li>
-                                <li><strong>Date debut </strong>: {{ challenge.dateDebut|date('d/m/Y') }}</li>
-                                <li><strong>Date fin </strong>: {{ challenge.dateFin|date('d/m/Y') }}</li>
-                                <li><strong>type </strong>:{{challenge.type }} </li>
-                            </ul>
-                        </div>
-                        <div class="portfolio-description">
-                            <h2>La description du challenge</h2>
-                            <p> {{ challenge.description }}</p>
-
-                        </div>
-                        <div class="col-lg-3 col-md-6 mt-4 mt-lg-0">
-                          <div class="box" data-aos="fade-up" data-aos-delay="200">
-                                <div class="btn-wrap">
-                                    <a href="{{ path("rejoindreChallenge",{"id":challenge.id}) }}" class="btn btn-outline-default btn-rounded waves-effect" style="background-color: #A3BF45;">Rejoindre</a>
-                               </div>
-                            </div>
-                            
-                       </div>
-                    </div>
-
-                </div>
 
             </div>
-        </section><!-- End Portfolio Details Section -->
+
+        </div>
+
+        </div>
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <!-- ======= Portfolio Section ======= -->
+    <section id="portfolio" class="portfolio">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-lg-12 d-flex justify-content-center" data-aos="fade-up">
+            <ul id="portfolio-flters">
+              <button id="button" type="button" class="btn btn-outline-default btn-rounded waves-effect">	<a href="{{ '/' }}"  class="at-linkactive">Tous les Challenges  </a></button>
+              <button id="button" type="button" class="btn btn-outline-default btn-rounded waves-effect">	<a href="{{ 'MesChallenges' }}"  class="at-linkactive">Mes Challenges  </a></button>
+              <button id="button" type="button" class="btn btn-outline-default btn-rounded waves-effect">	<a href="{{ '/classement/homeAdmin/' }}"  class="at-linkactive">Classement  </a></button>
+
+             
+              
+             
+              
+              <a href="/challenge/new/" class="btn btn-dark">créer coach</a>
+
+              <a href="/classement/homeAdmin/" class="btn btn-dark">classement admin</a>
+               <a href="/niveau/home/" class="btn btn-dark">niveau</a>
+               
+            </ul>
+          </div>
+        </div>
+        <div class="row portfolio-container" data-aos="fade-up">
+
+            {% if challengerejoints %}
+                {% for challengerejoint in challengerejoints %}
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+                        <div class="portfolio-wrap">
+                                <img src="/front/assets/img/portfolio/portfolio-4.jpg" class="img-fluid" alt="">
+                                <div class="portfolio-info">
+                                    <h4>{{ challengerejoint.titre }}</h4>
+                                    <p>Date debut : {{ challengerejoint.dateDebut|date('d/m/Y') }}</p>
+                                    <div class="portfolio-links">
+                                        <a href="{{ path ('finirChallenge', {'id' : challengerejoint.id})}}" title="finir"><i class="bx bx-plus"></i></a>
+                                        <a href="/challengerejoint/{{ challengerejoint.id }}" title="More Details"><i class="bx bx-link"></i></a>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                {% endfor %} 
+            {% else %}
+            <p class="description">Aucun challenges</p>
+            {% endif %} 
+
+
+        </div>
+        
+
+      </div>
+    </section><!-- End Portfolio Section -->
 
   </main><!-- End #main -->
 
@@ -216,14 +219,14 @@
 
     <div class="container">
       <div class="copyright">
-        &copy; Copyright <strong><span>Aura</span></strong>. All Rights Reserved
+        &copy; Copyright <strong><span>Aura </span></strong>. All Rights Reserved
       </div>
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->
         <!-- You can delete the links only if you purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/serenity-bootstrap-corporate-template/ -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        Designed by <a href="https://bootstrapmade.com/">The Crew </a>
       </div>
     </div>
   </footer><!-- End Footer -->
@@ -243,4 +246,6 @@
   <!-- Template Main JS File -->
   <script src="/front/assets/js/main.js"></script>
 
+</body>
 {% endblock %}
+
