@@ -20,8 +20,9 @@ class ClientModifyType extends AbstractType
             ->add('prenom',TextType::class)
 
 
+
             ->add('tel',TextType::class)
-            ->add('adresse',TextType::class)
+
             ->add('picture', FileType::class, [
 
 
@@ -45,6 +46,7 @@ class ClientModifyType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'validation_groups' => ['modify'],
         ]);
     }
 }
