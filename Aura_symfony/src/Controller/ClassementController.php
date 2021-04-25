@@ -26,8 +26,18 @@ class ClassementController extends AbstractController
       //récupérer tous les classements de la table classement de la BD
       // et les mettre dans le tableau $articles
       $classements= $this->getDoctrine()->getRepository(Classement::class)->findAll();
-      return  $this->render('classement/index.html.twig',['classements' => $classements]);  
+      return  $this->render('classement/show.html.twig',['classements' => $classements]);  
     }
+     /**
+     *@Route("/classement/homeAdmin",name="classement_list_admin")
+     */
+  public function homeAdmin()
+  {
+    //récupérer tous les classements de la table classement de la BD
+    // et les mettre dans le tableau $articles
+    $classements= $this->getDoctrine()->getRepository(Classement::class)->findAll();
+    return  $this->render('classement/showAdmin.html.twig',['classements' => $classements]);  
+  }
   
     /**
         * @Route("/classement/save")
