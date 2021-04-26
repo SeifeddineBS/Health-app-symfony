@@ -1,0 +1,55 @@
+{% extends 'Back/base.html.twig' %}
+
+
+{% block content %}
+    <div class="wrapper">
+        <div class="main-panel">
+
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card strpied-tabled-with-hover">
+                                <div class="card-header ">
+                                    <h4 class="card-title">Liste Coachs</h4>
+                                </div>
+                                <div class="card-body table-full-width table-responsive">
+                                    <table class="table table-hover table-striped">
+                                        <thead>
+                                        <th>CIN</th>
+                                        <th>Nom</th>
+                                        <th>Prenom</th>
+                                        <th>Email</th>
+                                        <th>Tel</th>
+                                        <th>Specialite</th>
+                                        </thead>
+                                        <tbody>
+                                        {% set i = 0 %}
+
+                                        {% for user in users %}
+
+
+                                            <tr >
+                                                <td>{{ user.id }}</td>
+                                                <td>{{ user.nom }}</td>
+                                                <td>{{ user.prenom }}</td>
+                                                <td>{{ user.email }}</td>
+                                                <td>{{ user.tel }}</td>
+                                                <td>{{ user.specialite }}</td>
+
+                                            </tr >
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

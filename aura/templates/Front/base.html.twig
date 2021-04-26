@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>{% block title %} Aura {% endblock %}</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{{ asset('assets/img/favicon.png') }} "rel="icon">
+  <link href="{{ asset('assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="{{ asset('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i') }}" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  {% block css %}
+    <link rel="stylesheet" href="{{ asset('assets/css/flashy.css') }}">
+    <link href="{{ asset('assets/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+    <!-- Template Main CSS File -->
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+  {% endblock %}
+  <!-- =======================================================
+  * Template Name: Serenity - v4.1.0
+  * Template URL: https://bootstrapmade.com/serenity-bootstrap-corporate-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+<header id="header" class="fixed-top d-flex align-items-center">
+  <div class="container d-flex align-items-center justify-content-between">
+
+    <div class="logo">
+      <h1 class="text-light"><a href="index.html">Aura</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+    </div>
+
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a class="active" href="index.html">Home</a></li>
+        <li class="dropdown"><a href="#"><span>About</span> <i class="bi bi-chevron-down"></i></a>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
+              <ul>
+                <li><a href="#">Deep Drop Down 1</a></li>
+                <li><a href="#">Deep Drop Down 2</a></li>
+                <li><a href="#">Deep Drop Down 3</a></li>
+                <li><a href="#">Deep Drop Down 4</a></li>
+                <li><a href="#">Deep Drop Down 5</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href={{ path('mesObjectifs') }}>Objectifs</a></li>
+        <li><a href={{ path('listactclient') }}>Activite/Therapie</a></li>
+        <li><a href="contact.html">Contact</a></li>
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+          <li><a href={{ path('ProfilClient') }}>Mon profil</a></li>
+
+          <li><a href="{{ path('logout') }}">Se deconnecter</a></li>
+          <li><p>Bienvenue: {{ app.user.nom }}  {{ app.user.prenom }}</p></li>
+        {% else %}
+          <li><a href="{{ path('ClientCreateAccount') }}">Creer un compte</a></li>
+          <li><a href="{{ path('loginFront') }}">Se connecter</a></li>
+
+        {% endif %}
+
+      </ul>
+
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav><!-- .navbar -->
+
+  </div>
+</header>
+{% block content %}
+  <!-- ======= Hero Section ======= -->
+  <section id="hero">
+    <div class="hero-container" data-aos="fade-up">
+      <h1>Bienvenue a Aura</h1>
+      <h2>Inspirez le positif</h2>
+    </div>
+  </section><!-- End Hero -->
+
+  <main id="main">
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about">
+      <div class="container">
+
+        <div class="row justify-content-end">
+          <div class="col-lg-11">
+            <div class="row justify-content-end">
+
+              <div class="col-lg-3 col-md-5 col-6 d-md-flex align-items-md-stretch">
+                <div class="count-box py-5">
+                  <i class="bi bi-emoji-smile"></i>
+                  <span data-purecounter-start="0" data-purecounter-end="65" class="purecounter">0</span>
+                  <p>Clients satisfaits</p>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-5 col-6 d-md-flex align-items-md-stretch">
+                <div class="count-box py-5">
+                  <i class="bi bi-journal-richtext"></i>
+                  <span data-purecounter-start="0" data-purecounter-end="30" class="purecounter">0</span>
+                  <p>Evenements et activites</p>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-5 col-6 d-md-flex align-items-md-stretch">
+                <div class="count-box py-5">
+                  <i class="bi bi-journal-richtext"></i>
+                  <span data-purecounter-start="0" data-purecounter-end="25" class="purecounter">0</span>
+                  <p>Articles</p>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-5 col-6 d-md-flex align-items-md-stretch">
+                <div class="count-box pb-5 pt-0 pt-lg-5">
+                  <i class="bi bi-award"></i>
+                  <span data-purecounter-start="0" data-purecounter-end="50" class="purecounter">0</span>
+                  <p>Objectifs et challenges</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </section><!-- End About Section -->
+
+    <!-- ======= Cta Section ======= -->
+    <section id="cta" class="cta">
+      <div class="container" data-aos="fade-in">
+
+        <div class="text-center">
+          <h3>Objectifs</h3>
+          <p>On vous propose des objectifs quotidiens que vous pouvez ajouter a votre liste. Et les effectuer!</p>
+          <a class="cta-btn" href={{ path('mesObjectifs') }}>Acceder a vos objectifs</a>
+        </div>
+
+      </div>
+    </section><!-- End Cta Section -->
+
+    <section id="portfolio" class="portfolio">
+      <div class="container">
+
+        <div class="row portfolio-container" data-aos="fade-up">
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+            <div class="portfolio-wrap">
+              <img src="assets/img/Chirine/ecran.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Mon objectif: Diminuer mon temps d'ecran</h4>
+                <div class="portfolio-links">
+                  <a href="{{ path('mesObjectifs') }}" title="More Details"><i class="bx bx-plus"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+            <div class="portfolio-wrap">
+              <img src="assets/img/Chirine/meditation.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Mon objectif: Faire de la meditation</h4>
+                <div class="portfolio-links">
+                  <a href="{{ path('mesObjectifs') }}" title="More Details"><i class="bx bx-plus"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+            <div class="portfolio-wrap">
+              <img src="assets/img/Chirine/pas.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Mon objectif: Pratiquer de la marche</h4>
+                <div class="portfolio-links">
+                  <a href="{{ path('mesObjectifs') }}" title="More Details"><i class="bx bx-plus"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+      </div>
+    </section>
+  <section size="10px">
+  <section  id="portfolio-details" class="cta portfolio-details container" size="10px" style="background-color: #9dc554">
+
+    <div   content="center">
+
+            <div class="row">
+
+              <div class="col-lg-4 col-md-12 col-7 portfolio-item filter-app" >
+                <div class="portfolio-wrap">
+                  <div class="portfolio-details-slider swiper-container">
+                    <div class="swiper-wrapper align-items-center">
+
+                      <div class="swiper-slide" style="" size="20%">
+                        <img src="../assets/img/portfolio/portfolio-details-1.jpg" alt="">
+                      </div>
+
+                      <div class="swiper-slide">
+                        <img src="../assets/img/portfolio/portfolio-details-2.jpg" alt="">
+                      </div>
+
+                      <div class="swiper-slide">
+                        <img src="../assets/img/portfolio/portfolio-details-3.jpg" alt="">
+                      </div>
+
+                    </div>
+                    <div class="swiper-pagination"></div>
+                  </div>
+
+
+            </div>
+          </div>
+              <div class="col-lg-4 col-md-12 col-7 portfolio-item filter-app" >
+                <div class="portfolio-wrap">
+                  <div class="portfolio-details-slider swiper-container">
+                    <div class="swiper-wrapper align-items-center">
+
+
+                      <div class="swiper-slide">
+                        <img src="../assets/img/portfolio/portfolio-details-8.jpg" alt="">
+                      </div>
+
+                      <div class="swiper-slide">
+                        <img src="../assets/img/portfolio/portfolio-details-5.jpg" alt="">
+                      </div>
+                      <div class="swiper-slide">
+                        <img src="../assets/img/portfolio/portfolio-details-7.jpg" alt="">
+                      </div>
+
+                    </div>
+                    <div class="swiper-pagination"></div>
+                  </div>
+
+
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-12 col-7 portfolio-item filter-app" >
+                <div class="portfolio-wrap">
+                  <div class="portfolio-details-slider swiper-container">
+                    <div class="swiper-wrapper align-items-center">
+
+                      <div class="swiper-slide" style="" size="20%">
+                        <img src="../assets/img/portfolio/portfolio-details-1.jpg" alt="">
+                      </div>
+
+                      <div class="swiper-slide">
+                        <img src="../assets/img/portfolio/portfolio-details-2.jpg" alt="">
+                      </div>
+
+                      <div class="swiper-slide">
+                        <img src="../assets/img/portfolio/portfolio-details-3.jpg" alt="">
+                      </div>
+
+                    </div>
+                    <div class="swiper-pagination"></div>
+                  </div>
+
+
+                </div>
+              </div>
+
+
+            </div>
+<div style="padding-left: 500px">
+  <a class="cta-btn " href={{ path('listactclient') }}>Rejoindre Nos Activites</a>
+
+</div>
+
+
+
+
+    </div>
+        </section><!-- End Portfolio Section -->
+  </section>
+      </div>
+
+    </div>
+    </aside>
+  </section>
+
+  </main><!-- End #main -->
+{% endblock %}
+
+<!-- ======= Footer ======= -->
+<footer id="footer">
+  <div class="footer-top">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-lg-3 col-md-6 footer-info">
+          <h3>Aura</h3>
+          <p> Inspirez le positif.</p>
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-links">
+          <h4>Liens utiles</h4>
+          <ul>
+            <li><a href="{{ path('main') }}">Accueil</a></li>
+            <li><a href="#">A propos de nous</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Termes du service</a></li>
+            <li><a href="#">Politique</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-contact">
+          <h4>Contactez-nous</h4>
+          <p>
+            1,2 rue Andre Ampere <br>
+            2083 - Pole Technologique<br>
+            El Ghazala <br>
+            <strong>Phone:</strong> +216 98 258 963<br>
+            <strong>Email:</strong> info@aura.com<br>
+          </p>
+
+          <div class="social-links">
+            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+          </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-newsletter">
+          <h4>Notre Newsletter</h4>
+          <p>Abonnez-vous a notre newsletter pour avoir nos nouveautes.</p>
+          <form action="" method="post">
+            <input type="email" name="email"><input type="submit" value="Inscrire">
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="copyright">
+      &copy; Copyright <strong><span>Aura</span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
+      <!-- All the links in the footer should remain intact. -->
+      <!-- You can delete the links only if you purchased the pro version. -->
+      <!-- Licensing information: https://bootstrapmade.com/license/ -->
+      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/serenity-bootstrap-corporate-template/ -->
+    </div>
+  </div>
+</footer><!-- End Footer -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+{% block js %}
+  <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
+  <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
+  <script src="{{ asset('assets/vendor/purecounter/purecounter.js') }}"></script>
+  <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/waypoints/noframework.waypoints.js') }}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{{ asset('assets/js/main.js') }}"></script>
+{% endblock %}
+
+</html>
