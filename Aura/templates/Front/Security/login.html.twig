@@ -9,7 +9,10 @@
 <div style="padding:70px">
 
 
+    {% for message in app.flashes('info') %}
 
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
     <section class="sign-in">
         <div class="container">
             <div class="signin-content">
@@ -21,7 +24,7 @@
 
 
                 <div class="signin-form">
-                    <h2 class="form-title">Sign up</h2>
+                    <h2 class="form-title">Se connecter</h2>
                     <form action="{{ path('loginFront') }}" method="POST">
                         <div class="form-group">
                             <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>

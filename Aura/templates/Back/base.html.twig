@@ -3,6 +3,8 @@
 {% endblock %}
 
 {% block css %}
+
+
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href={{ asset('../assets/img/apple-icon.png') }}>
   <link rel="icon" type="image/png" href={{ asset('../assets/img/favicon.ico') }}>
@@ -64,21 +66,43 @@
 
 
 
-            <li class="nav-item">
+
               {% if app.user.role == 'CoachV'  %}
-
+                <li class="nav-item">
               <p class="nav-link"> Coach: {{ app.user.nom }}  {{ app.user.prenom }}</p>
+                </li>
               {% elseif app.user.role == 'CoachNV' %}
-
+                <li class="nav-item">
                 <a class="nav-link" href="{{ path('sendMailCoachNV') }}"> Votre compte n'est pas encore verifie <br>Envoyer un email a l'administration</a>
-                <p class="nav-link"> Coach: {{ app.user.nom }}  {{ app.user.prenom }}</p>
-
+                </li>
+                <li class="nav-item">
+                  <p class="nav-link"> Coach: {{ app.user.nom }}  {{ app.user.prenom }}</p>
+                </li>
 
 
               {% elseif app.user.role == 'Admin' or app.user.role =='SAdmin' %}
-                <p class="nav-link"> Admin: {{ app.user.nom }}  {{ app.user.prenom }}</p>
+                {% if app.user.notifyAddCoach == 'Y'  %}
 
+
+                  <li style="margin-right: 550px">
+
+                    <a  style="color: red"href={{ path('lists_coachs') }}>
+
+                      <span>Un nouveau coach vient de s'inscrire !</span>
+                      <span class="badge"></span>
+                    </a>
+                    <br>
+                  </li>
+
+                {% endif %}
+
+                <li class="nav-item">
+                <p class="nav-link"> Admin: {{ app.user.nom }}  {{ app.user.prenom }}</p>
                 </li>
+
+
+
+
 
 
               {% endif %}
@@ -209,6 +233,7 @@ Tip 2: you can also add an image using data-image tag
       </ul>
     </div>
   </div>
+
 
 {% endblock %}
 

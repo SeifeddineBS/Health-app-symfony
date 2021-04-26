@@ -57,6 +57,11 @@
   <header id="header" class="fixed-top d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between">
 
+      {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% if app.user.role=='ClientN' %}
+          <p style="color: red">Veuillez verifier votre compte!</p>
+        {% endif %}
+      {% endif %}
       <div class="logo">
         <h1 class="text-light"><a href={{ path('home') }}>Aura</a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
@@ -94,7 +99,9 @@
           <li><p>Bienvenue: {{ app.user.nom }}  {{ app.user.prenom }}</p></li>
           {% else %}
             <li><a href="{{ path('ClientCreateAccount') }}">Creer un compte</a></li>
-            <li><a href="{{ path('loginFront') }}">Se connecter</a></li>
+            <li><a href="{{ path('loginFront') }}">Se connecter</a>
+            </li>
+
 
 
 
@@ -128,7 +135,7 @@
         <div class="row">
 
           <div class="col-lg-3 col-md-6 footer-info">
-            <h3>Serenity</h3>
+            <h3>Aura</h3>
             <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus. Scelerisque felis imperdiet proin fermentum leo. Amet volutpat consequat mauris nunc congue.</p>
           </div>
 
@@ -168,7 +175,11 @@
             <form action="" method="post">
               <input type="email" name="email"><input type="submit" value="Subscribe">
             </form>
+            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+
+            <a style="color: white" href="{{ path('loginBack') }}"> Se Connecter en tant qu'administrateur</a>
           </div>
+          {% endif %}
 
         </div>
       </div>
@@ -176,7 +187,7 @@
 
     <div class="container">
       <div class="copyright">
-        &copy; Copyright <strong><span>Serenity</span></strong>. All Rights Reserved
+        &copy; Copyright <strong><span>Aura</span></strong>. All Rights Reserved
       </div>
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->

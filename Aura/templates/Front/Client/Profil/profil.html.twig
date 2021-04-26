@@ -21,7 +21,10 @@
 
 
 
+{% for message in app.flashes('info') %}
 
+<div class="alert alert-success">{{ message }}</div>
+{% endfor %}
     <div class="container">
         <div class="row gutters">
             <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
@@ -42,7 +45,7 @@
                                 <h5 class="user-name">{{ User.nom }} {{ User.prenom }}</h5>
                                 <h6 class="user-email">{{ User.email }}</h6>
                                 <a href={{ path('change_passwordClient') }}> Changer votre mot de passe </a>
-                                <a href={{ path('delete') }}>Supprimer mon compte  </a>
+                                <a href={{ path('delete') }}>Desactiver mon compte  </a>
 
 
 
@@ -92,15 +95,7 @@
                             </div>
                         </div>
                         <div class="row gutters">
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label for="zIp">Adresse</label>
-                                    {{ form_widget(form_modify.adresse,{ 'attr': {'class': "form-control",
-                                        'value': User.adresse,
-                                        'placeholder': 'Votre Adresse'|trans} }) }}
-                                    <div style="color:#ff0000;"> {{ form_errors(form_modify.adresse) }}
-                                    </div>
-                                </div>
+
 
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
