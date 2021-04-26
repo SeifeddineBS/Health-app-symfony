@@ -43,7 +43,7 @@ class User implements UserInterface, \Serializable, TwoFactorInterface
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255)
-     * @MyValidate\VerifNull
+     * @MyValidate\VerifNull(groups={"modify"})
      */
     private $nom;
 
@@ -51,7 +51,7 @@ class User implements UserInterface, \Serializable, TwoFactorInterface
      * @var string
      *
      * @ORM\Column(name="prenom", type="string", length=255, nullable=false)
-     * @MyValidate\VerifNull
+     * @MyValidate\VerifNull(groups={"modify"})
      */
     private $prenom;
 
@@ -67,7 +67,7 @@ class User implements UserInterface, \Serializable, TwoFactorInterface
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255, nullable=false)
-     * @MyValidate\VerifPassword
+     * @MyValidate\VerifPassword(groups={"resetPassword"})
      */
     private $password;
 
@@ -75,7 +75,7 @@ class User implements UserInterface, \Serializable, TwoFactorInterface
      * @var string
      *
      * @ORM\Column(name="tel", type="string", length=255, nullable=false)
-     * @MyValidate\VerifTel
+     * @MyValidate\VerifTel(groups={"modify"})
      */
     private $tel;
 
@@ -83,7 +83,7 @@ class User implements UserInterface, \Serializable, TwoFactorInterface
      * @var string
      *
      * @ORM\Column(name="specialite", type="string", length=255, nullable=false)
-     *  @MyValidate\VerifNull
+     *  @MyValidate\VerifNull(groups={"modify"})
      */
     private $specialite;
 
@@ -133,6 +133,23 @@ class User implements UserInterface, \Serializable, TwoFactorInterface
      * @ORM\Column(name="googleAuthenticatorSecret", type="string", nullable=true)
      */
     private $googleAuthenticatorSecret;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="googleAccount", type="string", length=255, nullable=false, options={"default"="N"})
+     */
+    private $googleAccount = 'N';
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $activation_token;
+
+    /**
+     * @ORM\Column(type="string", length=255,nullable=false, options={"default"="N"})
+     */
+    private $notifyAddCoach;
 
     public function getId(): ?string
     {
@@ -270,6 +287,18 @@ class User implements UserInterface, \Serializable, TwoFactorInterface
         return $this;
     }
 
+    public function getGoogleAccount(): ?string
+    {
+        return $this->googleAccount;
+    }
+
+    public function setGoogleAccount(string $googleAccount): self
+    {
+        $this->googleAccount = $googleAccount;
+
+        return $this;
+    }
+
 
     public function getRole(): ?string
     {
@@ -374,5 +403,29 @@ class User implements UserInterface, \Serializable, TwoFactorInterface
     public function setGoogleAuthenticatorSecret(?string $googleAuthenticatorSecret): void
     {
         $this->googleAuthenticatorSecret = $googleAuthenticatorSecret;
+    }
+
+    public function getActivationToken(): ?string
+    {
+        return $this->activation_token;
+    }
+
+    public function setActivationToken(?string $activation_token): self
+    {
+        $this->activation_token = $activation_token;
+
+        return $this;
+    }
+
+    public function getNotifyAddCoach(): ?string
+    {
+        return $this->notifyAddCoach;
+    }
+
+    public function setNotifyAddCoach(string $notifyAddCoach): self
+    {
+        $this->notifyAddCoach = $notifyAddCoach;
+
+        return $this;
     }
 }

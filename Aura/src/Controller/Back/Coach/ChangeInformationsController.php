@@ -60,6 +60,8 @@ class ChangeInformationsController extends AbstractController
 
 
             $entityManager->flush();
+            $this->addFlash('info','Vos informations sont a jour');
+
         }
 
         return $this->render('Back/Coach/Profil/profil.html.twig',

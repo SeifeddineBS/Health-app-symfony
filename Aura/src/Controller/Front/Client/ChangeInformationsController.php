@@ -6,6 +6,7 @@ use App\Form\Client\ClientAddType;
 use App\Services\GetUser;
 use App\Entity\User;
 
+use App\Services\MaLocalisation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,23 +30,23 @@ class ChangeInformationsController extends AbstractController
     }
 
 
-
-
-
-
     /**
      * @param Request $request
+     * @param MaLocalisation $maLocalisation
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/Client/Profil/Change_informations", name="ProfilClient")
      */
 
 
-    function modifier(Request $request)
+    function modifier(Request $request,MaLocalisation $maLocalisation)
     {     $entityManager = $this->getDoctrine()->getManager();
         $user = new User();
         $form = $this->createForm(ClientModifyType::class,$this->user);
         $form->handleRequest($request);
         $file = $form->get('picture')->getData();
+
+
+
 
 
         if($form->isSubmitted()&&$form->isValid())
@@ -56,12 +57,16 @@ class ChangeInformationsController extends AbstractController
             {
                 $fileName = md5(uniqid()).'.'.$file->guessExtension();
                 $file->move($this->getParameter('pictures_directory'), $fileName);
-                $user->setPicture($fileName);
+                $this->user->setPicture($fileName);
                 $form->getData()->setPicture($fileName);
             }
 
 
+
+            $this->user->setAdresse($maLocalisation->MaLocalisation());
+
             $entityManager->flush();
+            $this->addFlash('info','Vos informations sont a jour');
         }
 
         return $this->render('Front/Client/Profil/profil.html.twig',

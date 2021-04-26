@@ -4,6 +4,7 @@ namespace App\Controller\Back\Coach;
 
 use App\Entity\User;
 use App\Form\Coach\CoachAddType;
+use App\Services\SmsService;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleAuthenticatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,6 +32,25 @@ class CreateAccountController extends AbstractController
 
     }
 
+    public function notifyAddCoach()
+    {       $em = $this->getDoctrine()->getManager();
+        $Users = $this->getDoctrine()->getRepository(User::class)->findBy(
+            ['role' => array('Admin','SAdmin')],
+        );
+        if($Users){
+
+            foreach ($Users as $User){
+
+                $User->setNotifyAddCoach('Y');
+                $em->flush();
+            }
+
+
+        }
+
+
+    }
+
 
 
     /**
@@ -39,7 +59,7 @@ class CreateAccountController extends AbstractController
      */
 
 
-    function ajouter(Request $request,GoogleAuthenticatorInterface $googleAuthenticatorService)
+    function ajouter(Request $request,GoogleAuthenticatorInterface $googleAuthenticatorService,SmsService $smsService)
     {
         $user = new User();
 
@@ -85,6 +105,15 @@ class CreateAccountController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+            $this->notifyAddCoach();
+
+            $smsService->sendSms(
+                "+21695227678",
+                "Salut un nouveau coach vient de s'inscrire a notre site veuillez verifiez"
+
+            );
+
+
             return $this->redirectToRoute('loginFront');
         }
         return $this->render('Back/Coach/CreateAccount/createAccount.html.twig',

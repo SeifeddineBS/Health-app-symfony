@@ -45,6 +45,11 @@ public function updateRoles()
                 $User->setRoles(array('ROLE_ADMIN'));
                 $em->flush();
             }
+            if($User->getRole()=='SAdmin'&& $User->getRoles()[0]=='ROLE_USER')
+            {
+                $User->setRoles(array('ROLE_ADMIN'));
+                $em->flush();
+            }
 
 
         }}

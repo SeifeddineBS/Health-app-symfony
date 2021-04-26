@@ -5,6 +5,7 @@ namespace App\Controller\Back\ListUsers;
 use App\Entity\User;
 use App\Form\Recherche\RechercheType;
 use App\Repository\UserRepository;
+use App\Services\GetUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,8 +29,14 @@ class ListCoachsController extends AbstractController
      */
 
 
-    public function afficher(Request $request)
-    {        $form = $this->createForm(RechercheType::class);
+    public function afficher(Request $request,GetUser $getUser)
+    {   $entityManager = $this->getDoctrine()->getManager();
+        $getUser->Get_User()->setNotifyAddCoach('N');
+        $entityManager->flush();
+
+
+
+        $form = $this->createForm(RechercheType::class);
         $form->handleRequest($request);
 
 

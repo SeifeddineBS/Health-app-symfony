@@ -19,6 +19,8 @@ class GetUser extends AbstractController
     }
 
 public function Get_User() :User
+{   $user=new User();
+    if($this->security->getUser())
 {
 
     $id = $this->security->getUser()->getUsername();
@@ -26,6 +28,7 @@ public function Get_User() :User
     $entityManager = $this->getDoctrine()->getManager();
     $user = $entityManager->getRepository(User::class)->find($id);
 
+}
     return $user;
 }
 
