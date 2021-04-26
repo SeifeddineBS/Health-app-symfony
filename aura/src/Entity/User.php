@@ -3,28 +3,45 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Validators as MyValidate;
+use Exception;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+
 
 /**
  * User
  *
  * @ORM\Table(name="user")
  * @ORM\Entity
+ * @UniqueEntity(
+ *     fields={"email"},
+ *     message="L'adresse Email deja existe."
+ * )
+ * @UniqueEntity(
+ *     fields={"id"},
+ *     message="Cin existe deja ."
+ * )
+ *   @ORM\Entity (repositoryClass="App\Repository\UserRepository")
+
  */
-class User
+class User implements UserInterface, \Serializable
 {
     /**
      * @var string
      *
      * @ORM\Column(name="id", type="string", length=255, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @MyValidate\VerifCin
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=255, nullable=false)
+     * @ORM\Column(name="nom", type="string", length=255)
+     * @MyValidate\VerifNull
      */
     private $nom;
 
@@ -32,6 +49,7 @@ class User
      * @var string
      *
      * @ORM\Column(name="prenom", type="string", length=255, nullable=false)
+     * @MyValidate\VerifNull
      */
     private $prenom;
 
@@ -39,6 +57,7 @@ class User
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=false)
+     * @MyValidate\VerifEmail
      */
     private $email;
 
@@ -46,6 +65,7 @@ class User
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255, nullable=false)
+     * @MyValidate\VerifPassword
      */
     private $password;
 
@@ -53,6 +73,7 @@ class User
      * @var string
      *
      * @ORM\Column(name="tel", type="string", length=255, nullable=false)
+     * @MyValidate\VerifTel
      */
     private $tel;
 
@@ -60,6 +81,7 @@ class User
      * @var string
      *
      * @ORM\Column(name="specialite", type="string", length=255, nullable=false)
+     *  @MyValidate\VerifNull
      */
     private $specialite;
 
@@ -67,6 +89,7 @@ class User
      * @var string
      *
      * @ORM\Column(name="adresse", type="string", length=255, nullable=false)
+     * @MyValidate\VerifNull
      */
     private $adresse;
 
@@ -76,6 +99,13 @@ class User
      * @ORM\Column(name="role", type="string", length=255, nullable=false)
      */
     private $role;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="roles", type="json")
+     */
+    private $roles;
 
     /**
      * @var string
@@ -98,25 +128,229 @@ class User
      */
     private $sms = 'N';
 
-    /**
-     * @return string
-     */
     public function getId(): ?string
     {
         return $this->id;
     }
 
-    /**
-     * @param string $id
-     */
-    public function setId(string $id): void
+    public function setId(string $id): self
     {
         $this->id = $id;
+
+        return $this;
     }
 
+
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): self
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getTel(): ?string
+    {
+        return $this->tel;
+    }
+
+    public function setTel(string $tel): self
+    {
+        $this->tel = $tel;
+
+        return $this;
+    }
+
+    public function getSpecialite(): ?string
+    {
+        return $this->specialite;
+    }
+
+    public function setSpecialite(string $specialite): self
+    {
+        $this->specialite = $specialite;
+
+        return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(string $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+
+
+    public function getRme(): ?string
+    {
+        return $this->rme;
+    }
+
+    public function setRme(string $rme): self
+    {
+        $this->rme = $rme;
+
+        return $this;
+    }
+
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    public function setPicture( $picture)
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getSms(): ?string
+    {
+        return $this->sms;
+    }
+
+    public function setSms(string $sms): self
+    {
+        $this->sms = $sms;
+
+        return $this;
+    }
+
+
+    public function getRole(): ?string
+    {
+        return $this->role;
+    }
+
+    public function setRole(string $role): self
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    public function getUsername()
+    {
+        return $this->id;
+
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function serialize()
+    {
+        return serialize(
+          [
+            $this->id,
+              $this->nom,
+              $this->prenom,
+              $this->email,
+              $this->password,
+              $this->tel,
+              $this->adresse,
+              $this->specialite,
+              $this->sms,
+              $this->rme,
+              $this->picture,
+              $this->role
+          ]
+
+        );
+        // TODO: Implement serialize() method.
+    }
+
+    public function unserialize($string)
+    {
+        list(
+            $this->id,
+            $this->nom,
+            $this->prenom,
+            $this->email,
+            $this->password,
+            $this->tel,
+            $this->adresse,
+            $this->specialite,
+            $this->sms,
+            $this->rme,
+            $this->picture,
+            $this->role
+
+            )=unserialize($string,['allowed_classes'=>false]);
+    }
     public function __toString(): string
     {
-        return $this->getId();
+        return $this->nom;
     }
-
 }

@@ -52,5 +52,58 @@ class Reponse
      */
     private $idUser;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getIdQuestion(): ?int
+    {
+        return $this->idQuestion;
+    }
+
+    public function setIdQuestion(int $idQuestion): self
+    {
+        $this->idQuestion = $idQuestion;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getReponse(): ?string
+    {
+        return $this->reponse;
+    }
+
+    public function setReponse(string $reponse): self
+    {
+        $this->reponse = $reponse;
+
+        return $this;
+    }
+
+    public function getIdUser(): ?User
+    {
+        return $this->idUser;
+    }
+
+    public function setIdUser(?User $idUser): self
+    {
+        $this->idUser = $idUser;
+
+        return $this;
+    }
+
 
 }

@@ -6,6 +6,7 @@ use App\Entity\Participationtherapie;
 use App\Entity\Therapie;
 use App\Entity\User;
 use App\Form\TherapieType;
+use App\Services\GetUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +28,7 @@ class TherapieController extends AbstractController
     }
 
     /**
-     * @Route("/ajouterTherapie", name="newTherapie")
+     * @Route("/ajouterTherapie", name="ajouterTherapie")
      */
 
     public function newTherapie(Request $request)
@@ -35,14 +36,14 @@ class TherapieController extends AbstractController
 
         $Therapie = new Therapie();
         $form = $this->createForm(TherapieType::class,$Therapie);
-        $form->add("add", SubmitType::class);
+        $form->add("Ajouter", SubmitType::class);
         $em = $this->getDoctrine()->getManager();
 
         $form->handleRequest($request);
         if ($form->isSubmitted()&& $form->isValid()) {
             $em->persist($Therapie);
             $em->flush();
-            return $this->redirectToRoute("back");
+            return $this->redirectToRoute("listTherapie");
         }
         return    $this->render("therapie/index.html.twig",['our_form'=>$form->createView()]);
 
@@ -58,15 +59,14 @@ class TherapieController extends AbstractController
 
         $res = $em->getRepository(Therapie::class)->find($id);
         $form = $this->createForm(TherapieType::class, $res);
-        $form->add("update",SubmitType::class
+        $form->add("Modifier",SubmitType::class
         );
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
         {
             $em->flush();
-            $this->addFlash('success', 'Therapie modifié avec succès');
-            return $this->redirectToRoute('back');
+            return $this->redirectToRoute('listTherapie');
         }
         return $this->render('therapie/modifierTherapie.html.twig', [
             'our_form' => $form->createView()
@@ -82,8 +82,7 @@ class TherapieController extends AbstractController
         $em=$this->getDoctrine()->getManager();
         $em->remove($id);
         $em->flush();
-        $this->addFlash('success', 'Therapie supprimé avec succès');
-        return $this->redirectToRoute("back");
+        return $this->redirectToRoute("listTherapie");
 
     }
     /**
@@ -124,12 +123,12 @@ class TherapieController extends AbstractController
 
 
 /**
-* @Route("/AjouterNote/{idact}/{iduser}/{v}", name="AjouterNoteSujet")
+* @Route("/AjouterNoteth/{idact}/{iduser}/{v}", name="AjouterNoteth")
 */
-    public function AjouterNoteth($idact,$iduser,$v,SessionInterface $session)
+    public function AjouterNoteth($idact,GetUser $user,$v,SessionInterface $session)
     {
         $s = $this->getDoctrine()->getRepository(Therapie::class)->find($idact);
-        $u = $this->getDoctrine()->getRepository(User::class)->find($iduser);
+        $u = $this->getDoctrine()->getRepository(User::class)->find($user->Get_User());
         {
             $em = $this->getDoctrine()->getManager();
 
@@ -137,7 +136,7 @@ class TherapieController extends AbstractController
             $r->setRating($v);
             $em->flush();
             //return $this->json(['moyenne'=>$s->NoteSujetMoyenne(),'note'=>$v],200);
-            return $this->redirectToRoute("home");
+            return $this->redirectToRoute("listactclient");
 
         }
         /*   else
@@ -158,10 +157,10 @@ class TherapieController extends AbstractController
     /**
      * @Route("/aimerth/{idact}/{iduser}/{v}", name="aimerth")
      */
-    public function aimerth($idact,$iduser,$v,SessionInterface $session)
+    public function aimerth($idact,GetUser $user,$v,SessionInterface $session)
     {
         $s = $this->getDoctrine()->getRepository(Therapie::class)->find($idact);
-        $u = $this->getDoctrine()->getRepository(User::class)->find($iduser);
+        $u = $this->getDoctrine()->getRepository(User::class)->find($user->Get_User());
         {
             $em = $this->getDoctrine()->getManager();
 
@@ -169,7 +168,7 @@ class TherapieController extends AbstractController
             $r->setAime($v);
             $em->flush();
             //return $this->json(['moyenne'=>$s->NoteSujetMoyenne(),'note'=>$v],200);
-            return $this->redirectToRoute("home");
+            return $this->redirectToRoute("listactclient");
 
         }}
 

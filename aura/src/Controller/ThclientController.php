@@ -8,6 +8,8 @@ use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Services\GetUser;
+
 
 class ThclientController extends AbstractController
 {
@@ -25,13 +27,13 @@ class ThclientController extends AbstractController
     /**
      * @Route("/rejoindreth/{id}", name="rejoindreth")
      */
-    public function rejoindreth(Therapie $id)
+    public function rejoindreth(Therapie $id,GetUser $userr)
     {
         $Propoacts=new Therapie();
         $Propoacts= $this->getDoctrine()->getRepository(Therapie::class)-> find($id);
         $actrejoindre=new Participationtherapie();
         $user=new User();
-        $user->setId("12345670");
+        $user->setId($userr->Get_User()->getId());
         $actrejoindre->setIdTherapie($Propoacts->getId());
         $actrejoindre->setIdClient($user);
 

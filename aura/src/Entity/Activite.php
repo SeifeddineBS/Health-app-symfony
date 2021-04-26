@@ -42,7 +42,7 @@ class Activite
      * @Assert\Date
      *
      * @var date A "d/m/Y" formatted value
-     * @Assert\GreaterThanOrEqual("2021-04-19")
+     * @Assert\GreaterThanOrEqual("2021-04-28")
      *@Assert\NotBlank(message="le champs date est obligatoire  ")
      * @ORM\Column(name="date", type="string", length=255, nullable=false)
      */

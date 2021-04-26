@@ -7,18 +7,27 @@ use App\Entity\Participationactivte;
 use App\Entity\Propoact;
 use App\Entity\Therapie;
 use App\Data\SearchData;
+use App\Form\ActivitePropoType;
 use App\Form\SearchForm;
 
 use App\Entity\User;
 use App\Form\ActiviteType;
 use App\Repository\ActiviteRepository;
+use App\Services\GetUser;
+use BotMan\BotMan\BotMan;
+use BotMan\BotMan\BotManFactory;
+use BotMan\BotMan\Drivers\DriverManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-use Symfony\Component\Routing\Annotation\Route;use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Routing\Annotation\Route;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 
 class ActiviteController extends AbstractController
@@ -36,7 +45,7 @@ class ActiviteController extends AbstractController
     }
 
     /**
-     * @Route("/ajouterActivite", name="newActivite")
+     * @Route("/ajouterActivite", name="ajouterActivite")
      */
 
     public function newActivite(Request $request)
@@ -44,14 +53,14 @@ class ActiviteController extends AbstractController
 
         $Activite = new Activite();
         $form = $this->createForm(ActiviteType::class,$Activite);
-        $form->add("add", SubmitType::class);
+        $form->add("Ajouter", SubmitType::class);
         $em = $this->getDoctrine()->getManager();
 
         $form->handleRequest($request);
         if ($form->isSubmitted()&& $form->isValid()) {
             $em->persist($Activite);
             $em->flush();
-            return $this->redirectToRoute("back");
+            return $this->redirectToRoute("listActivite");
         }
         return    $this->render("Activite/index.html.twig",['our_form'=>$form->createView()]);
 
@@ -67,15 +76,14 @@ class ActiviteController extends AbstractController
 
         $res = $em->getRepository(Activite::class)->find($id);
         $form = $this->createForm(ActiviteType::class, $res);
-        $form->add("update",SubmitType::class
+        $form->add("Modifier",SubmitType::class
         );
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
         {
             $em->flush();
-            $this->addFlash('success', 'Activite modifié avec succès');
-            return $this->redirectToRoute('back');
+            return $this->redirectToRoute('listActivite');
         }
         return $this->render('Activite/modifierActivite.html.twig', [
             'our_form' => $form->createView()
@@ -91,8 +99,7 @@ class ActiviteController extends AbstractController
         $em=$this->getDoctrine()->getManager();
         $em->remove($id);
         $em->flush();
-        $this->addFlash('success', 'Activite supprimé avec succès');
-        return $this->redirectToRoute("back");
+        return $this->redirectToRoute("listActivite");
 
     }
     /**
@@ -124,15 +131,15 @@ class ActiviteController extends AbstractController
     {
 
         $Propoact = new Propoact();
-        $form = $this->createForm(ActiviteType::class,$Propoact);
-        $form->add("add", SubmitType::class);
+        $form = $this->createForm(ActivitePropoType::class,$Propoact);
+        $form->add("Ajouter", SubmitType::class);
         $em = $this->getDoctrine()->getManager();
 
         $form->handleRequest($request);
         if ($form->isSubmitted()&& $form->isValid()) {
             $em->persist($Propoact);
             $em->flush();
-            return $this->redirectToRoute("back");
+            return $this->redirectToRoute("ajouterPropoact");
         }
         return    $this->render("Activite/ajouterpropoact.html.twig",['our_form'=>$form->createView()]);
 
@@ -155,8 +162,7 @@ class ActiviteController extends AbstractController
         if($form->isSubmitted() && $form->isValid())
         {
             $em->flush();
-            $this->addFlash('success', 'Propoact modifié avec succès');
-            return $this->redirectToRoute('back');
+            return $this->redirectToRoute('listPropoact');
         }
         return $this->render('Activite/modifierPropoact.html.twig', [
             'our_form' => $form->createView()
@@ -172,8 +178,7 @@ class ActiviteController extends AbstractController
         $em=$this->getDoctrine()->getManager();
         $em->remove($id);
         $em->flush();
-        $this->addFlash('success', 'Propoact supprimé avec succès');
-        return $this->redirectToRoute("back");
+        return $this->redirectToRoute("listPropoact");
 
     }
     /**
@@ -203,12 +208,12 @@ class ActiviteController extends AbstractController
     /**
      * @Route("/detailactclient/{id}", name="detailactclient")
      */
-    public function detailactclient(Activite $id)
+    public function detailactclient(Activite $id,GetUser $userr)
     {
         $s = $this->getDoctrine()->getRepository(Activite::class)->find($id);
         $user=new User();
-        $user->setId("12345670");
-        $u = $this->getDoctrine()->getRepository(User::class)->find($user);
+       $user->setId($userr->Get_User());
+       $u = $this->getDoctrine()->getRepository(User::class)->find($user);
 
 
             $r = $this->getDoctrine()->getRepository(Participationactivte::class)->findOneBy(array('idActivite'=>$s,'idClient'=>$u));
@@ -242,8 +247,7 @@ class ActiviteController extends AbstractController
         $em1=$this->getDoctrine()->getManager();
         $em1->remove($id);
         $em1->flush();
-        $this->addFlash('success', 'PropoActivite supprimé avec succès');
-        return $this->redirectToRoute("back");
+        return $this->redirectToRoute("listPropoact");
 
 
 
@@ -302,12 +306,12 @@ class ActiviteController extends AbstractController
 
     }
     /**
-     * @Route("/AjouterNote/{idact}/{iduser}/{v}", name="AjouterNoteSujet")
+     * @Route("/AjouterNote/{idact}/{iduser}/{v}", name="AjouterNote")
      */
-    public function AjouterNoteSujet($idact,$iduser,$v,SessionInterface $session)
+    public function AjouterNote($idact,GetUser $user,$v,SessionInterface $session)
     {
         $s = $this->getDoctrine()->getRepository(Activite::class)->find($idact);
-        $u = $this->getDoctrine()->getRepository(User::class)->find($iduser);
+        $u = $this->getDoctrine()->getRepository(User::class)->find($user->Get_User());
         {
             $em = $this->getDoctrine()->getManager();
 
@@ -315,7 +319,7 @@ class ActiviteController extends AbstractController
             $r->setRating($v);
             $em->flush();
             //return $this->json(['moyenne'=>$s->NoteSujetMoyenne(),'note'=>$v],200);
-            return $this->redirectToRoute("home");
+            return $this->redirectToRoute("listactclient");
 
         }
      /*   else
@@ -336,10 +340,10 @@ class ActiviteController extends AbstractController
     /**
      * @Route("/aimerAct/{idact}/{iduser}/{v}", name="aimerAct")
      */
-    public function aimerAct($idact,$iduser,$v,SessionInterface $session)
+    public function aimerAct($idact,GetUser $user,$v,SessionInterface $session)
     {
         $s = $this->getDoctrine()->getRepository(Activite::class)->find($idact);
-        $u = $this->getDoctrine()->getRepository(User::class)->find($iduser);
+        $u = $this->getDoctrine()->getRepository(User::class)->find($user->Get_User());
         {
             $em = $this->getDoctrine()->getManager();
 
@@ -347,7 +351,7 @@ class ActiviteController extends AbstractController
             $r->setAime($v);
             $em->flush();
             //return $this->json(['moyenne'=>$s->NoteSujetMoyenne(),'note'=>$v],200);
-            return $this->redirectToRoute("home");
+            return $this->redirectToRoute("listactclient");
 
         }}
     /**
@@ -377,5 +381,59 @@ class ActiviteController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/message", name="message")
+     */
+    function messageAction(Request $request)
+    {
+        DriverManager::loadDriver(\BotMan\Drivers\Web\WebDriver::class);
+
+        // Configuration for the BotMan WebDriver
+        $config = [];
+
+        // Create BotMan instance
+        $botman = BotManFactory::create($config);
+
+        // Give the bot some things to listen for.
+        $botman->hears('(hello|hi|hey)', function (BotMan $bot) {
+            $bot->reply('Hello!');
+        });
+        $botman->hears('(therapie)', function (BotMan $bot) {
+            $bot->reply('Une thérapie de groupe désigne une psychothérapie collective durant laquelle un ou plusieurs thérapeutes traitent plusieurs patients ensemble, réunis en groupe. Le traitement en groupe révélerait des effets positifs qui ne seraient pas obtenus lors de sessions individuelles.');
+        });
+        $botman->hears('(plus0)', function (BotMan $bot) {
+            $bot->reply('tu peux rejoindre dés maintenant');
+        });
+
+        // Set a fallback
+        $botman->fallback(function (BotMan $bot) {
+            $bot->reply('Sorry, I did not understand.');
+        });
+
+        // Start listening
+        $botman->listen();
+
+        return new Response();
+    }
+
+    /**
+     * @Route("/listactclient", name="homepage")
+     */
+    public function indexAction()
+    {
+        return $this->render('activite/afficherclientActivite.html.twig');
+    }
+
+    /**
+     * @Route("/chatframe", name="chatframe")
+     */
+    public function chatframeAction(Request $request)
+    {
+        return $this->render('chat_frame.html.twig');
+    }
+
+
+
 
 }

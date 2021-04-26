@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Proptherapie;
 use App\Entity\Therapie;
+use App\Form\MailObjectifType;
+use App\Form\TherapiePropoType;
 use App\Form\TherapieType;
+use App\Services\GetUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,22 +30,23 @@ class PropoTherapieController extends AbstractController
 
 
 /**
- * @Route("/ajouterPropoTherapie", name="newPropoTherapie")
+ * @Route("/ajouterPropoTherapie", name="ajouterPropoTherapie")
  */
 
-public function newPropoTherapie(Request $request)
+public function newPropoTherapie(Request $request,GetUser $user)
 {
 
     $PropoTherapie = new PropTherapie();
-    $form = $this->createForm(TherapieType::class,$PropoTherapie);
-    $form->add("add", SubmitType::class);
+    $form = $this->createForm(TherapiePropoType::class,$PropoTherapie);
+    $PropoTherapie->setIdcoach($user->Get_User());
+    $form->add("Ajouter", SubmitType::class);
     $em = $this->getDoctrine()->getManager();
 
     $form->handleRequest($request);
     if ($form->isSubmitted()&& $form->isValid()) {
         $em->persist($PropoTherapie);
         $em->flush();
-        return $this->redirectToRoute("back");
+        return $this->redirectToRoute('ajouterPropoTherapie');
     }
     return    $this->render("propo_therapie/index.html.twig",['our_form'=>$form->createView()]);
 
@@ -57,16 +61,15 @@ public function modifierPropoTherapie(Request $request, $id)
     $PropoTherapie= $this->getDoctrine()->getRepository(Proptherapie::class)->findAll();
 
     $res = $em->getRepository(Proptherapie::class)->find($id);
-    $form = $this->createForm(TherapieType::class, $res);
-    $form->add("update",SubmitType::class
+    $form = $this->createForm(TherapiePropoType::class, $res);
+    $form->add("Modifier",SubmitType::class
     );
 
     $form->handleRequest($request);
     if($form->isSubmitted() && $form->isValid())
     {
         $em->flush();
-        $this->addFlash('success', 'PropoTherapie modifié avec succès');
-        return $this->redirectToRoute('back');
+        return $this->redirectToRoute('modifierPropoTherapie');
     }
     return $this->render('propo_therapie/modifierPropoTherapie.html.twig', [
         'our_form' => $form->createView()
@@ -82,8 +85,7 @@ public function supprimerPropoTherapie(Proptherapie $id)
     $em=$this->getDoctrine()->getManager();
     $em->remove($id);
     $em->flush();
-    $this->addFlash('success', 'PropoTherapie supprimé avec succès');
-    return $this->redirectToRoute("back");
+    return $this->redirectToRoute("listPropoTherapie");
 
 }
 /**
@@ -123,12 +125,14 @@ public function listPropoTherapie()
         $em1=$this->getDoctrine()->getManager();
         $em1->remove($id);
         $em1->flush();
-        $this->addFlash('success', 'Propo Therapie supprimé avec succès');
-        return $this->redirectToRoute("back");
+        return $this->redirectToRoute("listPropoTherapie");
 
 
 
     }
+
+
+
 
 
 

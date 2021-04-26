@@ -49,5 +49,58 @@ class Commentaire
      */
     private $date;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getIdUser(): ?string
+    {
+        return $this->idUser;
+    }
+
+    public function setIdUser(string $idUser): self
+    {
+        $this->idUser = $idUser;
+
+        return $this;
+    }
+
+    public function getIdArticle(): ?int
+    {
+        return $this->idArticle;
+    }
+
+    public function setIdArticle(int $idArticle): self
+    {
+        $this->idArticle = $idArticle;
+
+        return $this;
+    }
+
+    public function getCommentaire(): ?string
+    {
+        return $this->commentaire;
+    }
+
+    public function setCommentaire(string $commentaire): self
+    {
+        $this->commentaire = $commentaire;
+
+        return $this;
+    }
+
+    public function getDate(): ?string
+    {
+        return $this->date;
+    }
+
+    public function setDate(string $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
 
 }

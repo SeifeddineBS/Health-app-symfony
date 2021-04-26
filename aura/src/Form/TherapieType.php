@@ -5,6 +5,7 @@ namespace App\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Date;
 
 class TherapieType extends AbstractType
 {
@@ -14,7 +15,13 @@ class TherapieType extends AbstractType
             ->add('id')
             ->add('idcoach')
             ->add('sujet')
-            ->add('date')
+
+            ->add('date', null, [
+                'label' => 'Date',
+                'required' => false,
+                'widget' => 'single_text',
+
+            ])
 
             ->add('lieu')
 

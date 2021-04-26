@@ -4,11 +4,18 @@ namespace App\Controller;
 
 use App\Entity\Activite;
 use App\Entity\Participationactivte;
+use App\Entity\Therapie;
 use App\Entity\User;
+use App\Services\GetUser;
+use BotMan\BotMan\BotMan;
+use BotMan\BotMan\BotManFactory;
+use BotMan\BotMan\Drivers\DriverManager;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use anlutro\BulkSms\Laravel\BulkSms;
 class ActclientController extends AbstractController
 {
     /**
@@ -27,19 +34,20 @@ class ActclientController extends AbstractController
     /**
      * @Route("/rejoindreact/{id}", name="rejoindreact")
      */
-    public function rejoindreact(Activite $id)
+    public function rejoindreact(Activite $id,GetUser $userr)
     {
         $Propoacts=new Activite();
         $Propoacts= $this->getDoctrine()->getRepository(Activite::class)-> find($id);
         $actrejoindre=new participationactivte();
 $user=new User();
-$user->setId("12345670");
+$user->setId($userr->Get_User()->getId());
         $actrejoindre->setIdActivite($Propoacts);
         $actrejoindre->setIdClient($user);
 
         $em = $this->getDoctrine()->getManager();
         $em->merge($actrejoindre);
         $em->flush();
+
         return $this->redirectToRoute("listactclient");
 
 
@@ -135,6 +143,29 @@ $user->setId("12345670");
         $em->flush();
         return $this->redirectToRoute("listactclient");
     }
+    /**
+     * @Route("/notif", name="notif")
+     */
+    public function notif(FlashyNotifier $flashy)
+    {
+
+
+        $flashy->success('Event created!', 'http://your-awesome-link.com');
+
+        return $this->redirectToRoute('about');
+    }
+    /**
+     * @Route("/about", name="about")
+     */
+    public function about()
+    {
+
+
+        $Propoacts= $this->getDoctrine()->getRepository(Activite::class)->findAll();
+        $Propoact= $this->getDoctrine()->getRepository(Therapie::class)->findAll();
+
+        return $this->render("Activite/afficherclientActivite.html.twig",array('actclient'=>$Propoacts,'thclient'=>$Propoact));  }
+
 
 
 
