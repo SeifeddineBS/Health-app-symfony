@@ -50,6 +50,134 @@ class Article
     private $date;
 
     /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitre(): ?string
+    {
+        return $this->titre;
+    }
+
+    /**
+     * @param string $titre
+     */
+    public function setTitre(string $titre): void
+    {
+        $this->titre = $titre;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTheme(): ?string
+    {
+        return $this->theme;
+    }
+
+    /**
+     * @param string $theme
+     */
+    public function setTheme(string $theme): void
+    {
+        $this->theme = $theme;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNomAuteur(): ?string
+    {
+        return $this->nomAuteur;
+    }
+
+    /**
+     * @param string $nomAuteur
+     */
+    public function setNomAuteur(string $nomAuteur): void
+    {
+        $this->nomAuteur = $nomAuteur;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDate(): ?string
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param string $date
+     */
+    public function setDate(string $date): void
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @return string
+     */
+    public function getArticle()
+    {
+        return $this->article;
+    }
+
+    /**
+     * @param string $article
+     */
+    public function setArticle($article): void
+    {
+        $this->article = $article;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdUser():?string
+    {
+        return $this->idUser;
+    }
+
+    /**
+     * @param string $idUser
+     */
+    public function setIdUser(string $idUser): void
+    {
+        $this->idUser = $idUser;
+    }
+
+    /**
+     * @return int
+     */
+    public function getApprouver()
+    {
+        return $this->approuver;
+    }
+
+    /**
+     * @param int $approuver
+     */
+    public function setApprouver($approuver): void
+    {
+        $this->approuver = $approuver;
+    }
+
+    /**
      * @var string
      *
      * @ORM\Column(name="article", type="string", length=255, nullable=false)
@@ -69,95 +197,6 @@ class Article
      * @ORM\Column(name="approuver", type="integer", nullable=false)
      */
     private $approuver = '0';
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getTitre(): ?string
-    {
-        return $this->titre;
-    }
-
-    public function setTitre(string $titre): self
-    {
-        $this->titre = $titre;
-
-        return $this;
-    }
-
-    public function getTheme(): ?string
-    {
-        return $this->theme;
-    }
-
-    public function setTheme(string $theme): self
-    {
-        $this->theme = $theme;
-
-        return $this;
-    }
-
-    public function getNomAuteur(): ?string
-    {
-        return $this->nomAuteur;
-    }
-
-    public function setNomAuteur(string $nomAuteur): self
-    {
-        $this->nomAuteur = $nomAuteur;
-
-        return $this;
-    }
-
-    public function getDate(): ?string
-    {
-        return $this->date;
-    }
-
-    public function setDate(string $date): self
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    public function getArticle(): ?string
-    {
-        return $this->article;
-    }
-
-    public function setArticle(string $article): self
-    {
-        $this->article = $article;
-
-        return $this;
-    }
-
-    public function getIdUser(): ?string
-    {
-        return $this->idUser;
-    }
-
-    public function setIdUser(string $idUser): self
-    {
-        $this->idUser = $idUser;
-
-        return $this;
-    }
-
-    public function getApprouver(): ?int
-    {
-        return $this->approuver;
-    }
-
-    public function setApprouver(int $approuver): self
-    {
-        $this->approuver = $approuver;
-
-        return $this;
-    }
 
 
 }

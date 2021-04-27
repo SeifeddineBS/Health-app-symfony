@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Participationactivte
  *
- * @ORM\Table(name="participationactivte")
+ * @ORM\Table(name="participationactivte", indexes={@ORM\Index(name="fk_acti", columns={"id_activite"}), @ORM\Index(name="fk_cl", columns={"id_client"})})
  * @ORM\Entity
  */
 class Participationactivte
@@ -22,65 +22,117 @@ class Participationactivte
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="id_client", type="string", length=255, nullable=false)
-     */
-    private $idClient;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_activite", type="integer", nullable=false)
-     */
-    private $idActivite;
-
-    /**
      * @var int|null
      *
      * @ORM\Column(name="rating", type="integer", nullable=true)
      */
-    private $rating;
+    private $rating= '0';
 
-    public function getId(): ?int
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="aime", type="integer", nullable=true)
+     */
+    private $aime = '0';
+
+    /**
+     * @var \Activite
+     *
+     * @ORM\ManyToOne(targetEntity=Activite::class)
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_activite", referencedColumnName="id")
+     * })
+     */
+    private $idActivite;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_client", referencedColumnName="id")
+     * })
+     */
+    private $idClient;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getIdClient(): ?string
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
     {
-        return $this->idClient;
+        $this->id = $id;
     }
 
-    public function setIdClient(string $idClient): self
-    {
-        $this->idClient = $idClient;
-
-        return $this;
-    }
-
-    public function getIdActivite(): ?int
-    {
-        return $this->idActivite;
-    }
-
-    public function setIdActivite(int $idActivite): self
-    {
-        $this->idActivite = $idActivite;
-
-        return $this;
-    }
-
-    public function getRating(): ?int
+    /**
+     * @return int|null
+     */
+    public function getRating()
     {
         return $this->rating;
     }
 
-    public function setRating(?int $rating): self
+    /**
+     * @param int|null $rating
+     */
+    public function setRating(int $rating): void
     {
         $this->rating = $rating;
+    }
 
-        return $this;
+    /**
+     * @return int|null
+     */
+    public function getAime()
+    {
+        return $this->aime;
+    }
+
+    /**
+     * @param int|null $aime
+     */
+    public function setAime($aime): void
+    {
+        $this->aime = $aime;
+    }
+
+    /**
+     * @return Activite
+     */
+    public function getIdActivite(): ?Activite
+    {
+        return $this->idActivite;
+    }
+
+    /**
+     * @param Activite $idActivite
+     */
+    public function setIdActivite(Activite $idActivite): void
+    {
+        $this->idActivite = $idActivite;
+    }
+
+    /**
+     * @return User
+     */
+    public function getIdClient(): ?User
+    {
+        return $this->idClient;
+    }
+
+    /**
+     * @param User $idClient
+     */
+    public function setIdClient(User $idClient): void
+    {
+        $this->idClient = $idClient;
     }
 
 

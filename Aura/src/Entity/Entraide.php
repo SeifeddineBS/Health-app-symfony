@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * Entraide
  *
@@ -38,9 +39,9 @@ class Entraide
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="date", nullable=false)
+     * @ORM\Column(name="date", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $date;
+    private $date ;
 
     /**
      * @var string
@@ -52,77 +53,117 @@ class Entraide
     /**
      * @var \User
      *
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_user", referencedColumnName="id")
      * })
      */
     private $idUser;
 
+    /**
+     * @return int
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
     public function getQuestion(): ?string
     {
         return $this->question;
     }
 
-    public function setQuestion(string $question): self
+    /**
+     * @param string $question
+     */
+    public function setQuestion(string $question): void
     {
         $this->question = $question;
-
-        return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getCategorie(): ?string
     {
         return $this->categorie;
     }
 
-    public function setCategorie(string $categorie): self
+    /**
+     * @param string $categorie
+     */
+    public function setCategorie(string $categorie): void
     {
         $this->categorie = $categorie;
-
-        return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->date;
-    }
 
-    public function setDate(\DateTimeInterface $date): self
-    {
-        $this->date = $date;
 
-        return $this;
-    }
 
+
+    /**
+     * @return string
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
     {
         $this->email = $email;
-
-        return $this;
     }
 
+    /**
+     * @return User
+     */
     public function getIdUser(): ?User
     {
         return $this->idUser;
     }
 
-    public function setIdUser(?User $idUser): self
+    /**
+     * @param User $idUser
+     */
+    public function setIdUser(User $idUser): void
     {
         $this->idUser = $idUser;
-
-        return $this;
     }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+        return $this->date->format('d/m/Y');
+    }
+
+    /**
+     * @param \DateTime $date
+     */
+    public function setDate(\DateTime $date): void
+    {
+        $this->date = $date;
+    }
+
+
+
+
 
 
 }

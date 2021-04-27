@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Participationtherapie
  *
- * @ORM\Table(name="participationtherapie")
+ * @ORM\Table(name="participationtherapie", indexes={@ORM\Index(name="fk_client", columns={"id_client"})})
  * @ORM\Entity
  */
 class Participationtherapie
@@ -20,13 +20,6 @@ class Participationtherapie
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="id_client", type="string", length=255, nullable=false)
-     */
-    private $idClient;
 
     /**
      * @var int
@@ -42,45 +35,101 @@ class Participationtherapie
      */
     private $rating;
 
-    public function getId(): ?int
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="aime", type="integer", nullable=true)
+     */
+    private $aime = '0';
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_client", referencedColumnName="id")
+     * })
+     */
+    private $idClient;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getIdClient(): ?string
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
     {
-        return $this->idClient;
+        $this->id = $id;
     }
 
-    public function setIdClient(string $idClient): self
-    {
-        $this->idClient = $idClient;
-
-        return $this;
-    }
-
+    /**
+     * @return int
+     */
     public function getIdTherapie(): ?int
     {
         return $this->idTherapie;
     }
 
-    public function setIdTherapie(int $idTherapie): self
+    /**
+     * @param int $idTherapie
+     */
+    public function setIdTherapie(int $idTherapie): void
     {
         $this->idTherapie = $idTherapie;
-
-        return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getRating(): ?int
     {
         return $this->rating;
     }
 
-    public function setRating(?int $rating): self
+    /**
+     * @param int|null $rating
+     */
+    public function setRating(?int $rating): void
     {
         $this->rating = $rating;
+    }
 
-        return $this;
+    /**
+     * @return int|null
+     */
+    public function getAime()
+    {
+        return $this->aime;
+    }
+
+    /**
+     * @param int|null $aime
+     */
+    public function setAime($aime): void
+    {
+        $this->aime = $aime;
+    }
+
+    /**
+     * @return User
+     */
+    public function getIdClient(): ?User
+    {
+        return $this->idClient;
+    }
+
+    /**
+     * @param User $idClient
+     */
+    public function setIdClient(User $idClient): void
+    {
+        $this->idClient = $idClient;
     }
 
 
