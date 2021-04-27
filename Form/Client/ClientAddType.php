@@ -11,6 +11,13 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Validator\Constraints\IsTrue;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
+
+
+
+
 
 
 
@@ -32,22 +39,31 @@ class ClientAddType extends AbstractType
                 'second_options' => ['label' => '.'],
              ])
             ->add('tel',TextType::class)
-            ->add('adresse',TextType::class)
+            ->add('adresse', CheckboxType::class, [
+                'required' => false,
+                'constraints' => [
+                    new IsTrue([
+                        'message' => 'Vous devez accepter .',
+                    ]),
+                ],
+
+            ])
             ->add('specialite',TextType::class)
 
             ->add('picture', FileType::class, [
-
-
-                // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
-
-                // make it optional so you don't have to re-upload the PDF file
-                // every time you edit the Product details
                 'required' => false,
-
-
-
             ])
+
+            ->add('captcha', CaptchaType::class,[
+
+                    'invalid_message' => 'Code incorrect',
+
+                ]
+
+            );
+
+
 
 
         ;

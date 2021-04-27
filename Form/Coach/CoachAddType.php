@@ -3,6 +3,7 @@
 namespace App\Form\Coach;
 
 use App\Entity\User;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -45,6 +46,11 @@ class CoachAddType extends AbstractType
                 'required' => false,
 
 
+
+            ])
+            ->add('captcha', CaptchaType::class,[
+
+                'invalid_message' => 'Code incorrect',
 
             ])
 
