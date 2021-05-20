@@ -7,6 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 /**
@@ -23,6 +24,7 @@ class Objectif
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups("post:read")
      */
     private $id;
 
@@ -31,6 +33,7 @@ class Objectif
      *
      * @ORM\Column(name="description", type="string", length=255, nullable=false)
      * @Assert\Length(min=3)
+     * @Groups("post:read")
      */
     private $description;
 
@@ -38,6 +41,7 @@ class Objectif
      * @var int
      * @Assert\Positive
      * @ORM\Column(name="reponse", type="integer", nullable=false)
+     * @Groups("post:read")
      */
     private $reponse;
 
@@ -45,6 +49,7 @@ class Objectif
      * @Assert\Date
      * @var date A "dd/MM/yyyy" formatted value
      * @ORM\Column(name="dateDebut", type="string", length=50, nullable=false)
+     * @Groups("post:read")
      */
     private $datedebut;
 
@@ -52,6 +57,7 @@ class Objectif
      * @var int
      * @Assert\Positive
      * @ORM\Column(name="duree", type="integer", nullable=false)
+     * @Groups("post:read")
      */
     private $duree;
 
@@ -59,6 +65,7 @@ class Objectif
      * @var int
      *
      * @ORM\Column(name="mailchecked", type="integer", nullable=true)
+     * @Groups("post:read")
      */
     private $mailchecked;
 
@@ -66,18 +73,21 @@ class Objectif
      * @var string
      *
      * @ORM\Column(name="icone", type="string", length=50, nullable=true)
+     * @Groups("post:read")
      */
     private $icone;
 
     /**
      * @ORM\Column(name="image", type="string", length=255, nullable=true)
      * @var string
+     * @Groups("post:read")
      */
     private $image;
 
     /**
      * @Vich\UploadableField(mapping="objectifs", fileNameProperty="image")
      * @var File
+     * @Groups("post:read")
      */
     private $imageFile;
 
@@ -89,16 +99,19 @@ class Objectif
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idClient", referencedColumnName="id")
      * })
+     * @Groups("post:read")
      */
     private $idclient;
 
     /**
      * @ORM\Column(type="string", length=15, nullable=true)
+     * @Groups("post:read")
      */
     private $dateFin;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups("post:read")
      */
     private $updated_at;
 
