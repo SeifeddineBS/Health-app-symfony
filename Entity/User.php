@@ -7,6 +7,9 @@ use App\Validators as MyValidate;
 use Exception;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface;
+
 
 
 
@@ -26,7 +29,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *   @ORM\Entity (repositoryClass="App\Repository\UserRepository")
 
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface, \Serializable, TwoFactorInterface
 {
     /**
      * @var string
@@ -34,6 +37,7 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(name="id", type="string", length=255, nullable=false)
      * @ORM\Id
      * @MyValidate\VerifCin
+     * @Groups ("post:read")
      */
     private $id;
 
@@ -41,7 +45,8 @@ class User implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255)
-     * @MyValidate\VerifNull
+     * @MyValidate\VerifNull(groups={"modify"})
+     * @Groups ("post:read")
      */
     private $nom;
 
@@ -49,7 +54,8 @@ class User implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="prenom", type="string", length=255, nullable=false)
-     * @MyValidate\VerifNull
+     * @MyValidate\VerifNull(groups={"modify"})
+     * @Groups ("post:read")
      */
     private $prenom;
 
@@ -58,6 +64,7 @@ class User implements UserInterface, \Serializable
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=false)
      * @MyValidate\VerifEmail
+     *  @Groups ("post:read")
      */
     private $email;
 
@@ -65,7 +72,8 @@ class User implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255, nullable=false)
-     * @MyValidate\VerifPassword
+     * @MyValidate\VerifPassword(groups={"resetPassword"})
+     *  @Groups ("post:read")
      */
     private $password;
 
@@ -73,7 +81,8 @@ class User implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="tel", type="string", length=255, nullable=false)
-     * @MyValidate\VerifTel
+     * @MyValidate\VerifTel(groups={"modify"})
+     *  @Groups ("post:read")
      */
     private $tel;
 
@@ -81,7 +90,8 @@ class User implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="specialite", type="string", length=255, nullable=false)
-     *  @MyValidate\VerifNull
+     *  @MyValidate\VerifNull(groups={"modify"})
+     * @Groups ("post:read")
      */
     private $specialite;
 
@@ -89,7 +99,7 @@ class User implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="adresse", type="string", length=255, nullable=false)
-     * @MyValidate\VerifNull
+     *  @Groups ("post:read")
      */
     private $adresse;
 
@@ -97,6 +107,7 @@ class User implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="role", type="string", length=255, nullable=false)
+     * @Groups ("post:read")
      */
     private $role;
 
@@ -104,6 +115,7 @@ class User implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="roles", type="json")
+     * @Groups ("post:read")
      */
     private $roles;
 
@@ -111,6 +123,7 @@ class User implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="rme", type="string", length=255, nullable=false, options={"default"="N"})
+     * @Groups ("post:read")
      */
     private $rme = 'N';
 
@@ -118,6 +131,7 @@ class User implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="picture", type="string", length=255, nullable=false)
+     * @Groups ("post:read")
      */
     private $picture;
 
@@ -125,8 +139,35 @@ class User implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="sms", type="string", length=255, nullable=false, options={"default"="N"})
+     * @Groups ("post:read")
      */
     private $sms = 'N';
+
+    /**
+     * @ORM\Column(name="googleAuthenticatorSecret", type="string", nullable=true)
+     * @Groups ("post:read")
+     */
+    private $googleAuthenticatorSecret;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="googleAccount", type="string", length=255, nullable=false, options={"default"="N"})
+     * @Groups ("post:read")
+     */
+    private $googleAccount = 'N';
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups ("post:read")
+     */
+    private $activation_token;
+
+    /**
+     * @ORM\Column(type="string", length=255,nullable=false, options={"default"="N"})
+     * @Groups ("post:read")
+     */
+    private $notifyAddCoach;
 
     public function getId(): ?string
     {
@@ -264,6 +305,18 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
+    public function getGoogleAccount(): ?string
+    {
+        return $this->googleAccount;
+    }
+
+    public function setGoogleAccount(string $googleAccount): self
+    {
+        $this->googleAccount = $googleAccount;
+
+        return $this;
+    }
+
 
     public function getRole(): ?string
     {
@@ -349,8 +402,69 @@ class User implements UserInterface, \Serializable
 
             )=unserialize($string,['allowed_classes'=>false]);
     }
+
+    public function isGoogleAuthenticatorEnabled(): bool
+    {
+        return $this->googleAuthenticatorSecret ? true : false;
+    }
+
+    public function getGoogleAuthenticatorUsername(): string
+    {
+        return $this->id;
+    }
+
+    public function getGoogleAuthenticatorSecret(): ?string
+    {
+        return $this->googleAuthenticatorSecret;
+    }
+
+    public function setGoogleAuthenticatorSecret(?string $googleAuthenticatorSecret): void
+    {
+        $this->googleAuthenticatorSecret = $googleAuthenticatorSecret;
+    }
+
+    public function getActivationToken(): ?string
+    {
+        return $this->activation_token;
+    }
+
+    public function setActivationToken(?string $activation_token): self
+    {
+        $this->activation_token = $activation_token;
+
+        return $this;
+    }
+
+    public function getNotifyAddCoach(): ?string
+    {
+        return $this->notifyAddCoach;
+    }
+
+    public function setNotifyAddCoach(string $notifyAddCoach): self
+    {
+        $this->notifyAddCoach = $notifyAddCoach;
+
+        return $this;
+    }
+
     public function __toString(): string
     {
         return $this->nom;
     }
+    function construct($id,$nom,$prenom,$email,$password,$tel,$specialite,$adresse,$role,$roles,$picture) {
+        $this->setId($id);
+        $this->setNom($nom);
+        $this->SetPrenom($prenom);
+        $this->setEmail($email);
+        $this->setPassword($password);
+        $this->setAdresse($adresse);
+        $this->setTel($tel);
+        $this->setSpecialite($specialite);
+        $this->setPicture($picture);
+        $this->setRole($role);
+        $this->setRoles($roles);
+
+
+    }
+
 }
