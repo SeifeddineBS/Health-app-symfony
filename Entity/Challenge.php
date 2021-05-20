@@ -1,84 +1,96 @@
-<?php
-
+<?php 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * Challenge
- *
+ * @ORM\Entity(repositoryClass="App\Repository\ChallengeRepository")
  * @ORM\Table(name="challenge", indexes={@ORM\Index(name="id_niveau", columns={"id_niveau"})})
- * @ORM\Entity
  */
 class Challenge
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(type="integer")
+     *  @Groups("challenges")
+     
      */
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="titre", type="string", length=255, nullable=false)
+     * @ORM\Column(name="titre",type="string", length=255, nullable=false)
+     *  @Assert\NotBlank
+     *  @Groups("challenges")
      */
     private $titre;
 
+
     /**
-     * @var string
-     *
      * @ORM\Column(name="type", type="string", length=255, nullable=false)
+     * @Assert\NotBlank
+     *  @Groups("challenges")
      */
     private $type;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="text", length=65535, nullable=false)
+     /**
+     * @ORM\Column(name="description ", type="string")
+     *  @Assert\NotBlank
+     *  @Groups("challenges")
      */
     private $description;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="img", type="string", length=255, nullable=false)
+     /**
+     * @ORM\Column(name="img" ,type="string", length=255)
+     *  @Groups("challenges")
      */
     private $img;
 
-    /**
-     * @var \DateTime
-     *
+     /**
      * @ORM\Column(name="date_debut", type="date", nullable=false)
+     *  @Assert\NotBlank
+     * @Assert\GreaterThanOrEqual("today") 
+     *  @Groups("challenges")
+
      */
     private $dateDebut;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="date_fin", type="date", nullable=false)
+     *  @Assert\NotBlank
+     * @Assert\Expression(
+     *     "this.getDateDebut() < this.getDateFin()",
+     *     message="La date fin ne doit pas être antérieure à la date début"
+     * )
+     *  @Groups("challenges")
      */
     private $dateFin;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="nb_participants", type="integer", nullable=false)
+     * @ORM\Column(name="nb_participants", type="integer", nullable=true)
+     * @Assert\PositiveOrZero
+     *  @Groups("challenges")
      */
     private $nbParticipants;
 
     /**
-     * @var \Niveau
-     *
+     * 
+     * @ORM\Column(type="integer")
      * @ORM\ManyToOne(targetEntity="Niveau")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_niveau", referencedColumnName="id")
-     * })
+     * @ORM\JoinColumn(name="id_niveau", referencedColumnName="id")})
+     * @Assert\NotBlank
+     * @Assert\PositiveOrZero
+     *  @Groups("challenges")
      */
     private $idNiveau;
+
+    
 
     public function getId(): ?int
     {
@@ -108,7 +120,6 @@ class Challenge
 
         return $this;
     }
-
     public function getDescription(): ?string
     {
         return $this->description;
@@ -121,36 +132,36 @@ class Challenge
         return $this;
     }
 
-    public function getImg(): ?string
+    public function getimg(): ?string
     {
         return $this->img;
     }
 
-    public function setImg(string $img): self
+    public function setimg(string $img): self
     {
         $this->img = $img;
 
         return $this;
     }
 
-    public function getDateDebut(): ?\DateTimeInterface
+    public function getDateDebut(): ?DateTime
     {
         return $this->dateDebut;
     }
 
-    public function setDateDebut(\DateTimeInterface $dateDebut): self
+    public function setDateDebut(DateTime $dateDebut): self
     {
         $this->dateDebut = $dateDebut;
 
         return $this;
     }
 
-    public function getDateFin(): ?\DateTimeInterface
+    public function getDateFin(): ?DateTime
     {
         return $this->dateFin;
     }
 
-    public function setDateFin(\DateTimeInterface $dateFin): self
+    public function setDateFin(DateTime $dateFin): self
     {
         $this->dateFin = $dateFin;
 
@@ -161,25 +172,25 @@ class Challenge
     {
         return $this->nbParticipants;
     }
-
     public function setNbParticipants(int $nbParticipants): self
     {
-        $this->nbParticipants = $nbParticipants;
-
+        $this->nbParticipants=$nbParticipants;
         return $this;
     }
 
-    public function getIdNiveau(): ?Niveau
+    public function getIdNiveau(): ?int
     {
         return $this->idNiveau;
     }
-
-    public function setIdNiveau(?Niveau $idNiveau): self
+    public function setIdNiveau(int $idNiveau): self
     {
-        $this->idNiveau = $idNiveau;
-
+        $this->idNiveau=$idNiveau;
         return $this;
     }
+
+    
+
+
 
 
 }

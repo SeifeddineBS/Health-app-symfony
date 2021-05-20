@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Commentaire
  *
- * @ORM\Table(name="commentaire", indexes={@ORM\Index(name="com1", columns={"id_user"})})
+ * @ORM\Table(name="commentaire", indexes={@ORM\Index(name="id_article", columns={"id_article"}), @ORM\Index(name="com1", columns={"id_user"})})
  * @ORM\Entity
  */
 class Commentaire
@@ -29,13 +29,6 @@ class Commentaire
     private $idUser;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id_article", type="integer", nullable=false)
-     */
-    private $idArticle;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="commentaire", type="text", length=0, nullable=false)
@@ -49,58 +42,95 @@ class Commentaire
      */
     private $date;
 
-    public function getId(): ?int
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
 
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
     public function getIdUser(): ?string
     {
         return $this->idUser;
     }
 
-    public function setIdUser(string $idUser): self
+    /**
+     * @param string $idUser
+     */
+    public function setIdUser(string $idUser): void
     {
         $this->idUser = $idUser;
-
-        return $this;
     }
 
-    public function getIdArticle(): ?int
-    {
-        return $this->idArticle;
-    }
-
-    public function setIdArticle(int $idArticle): self
-    {
-        $this->idArticle = $idArticle;
-
-        return $this;
-    }
-
+    /**
+     * @return string
+     */
     public function getCommentaire(): ?string
     {
         return $this->commentaire;
     }
 
-    public function setCommentaire(string $commentaire): self
+    /**
+     * @param string $commentaire
+     */
+    public function setCommentaire(string $commentaire): void
     {
         $this->commentaire = $commentaire;
-
-        return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getDate(): ?string
     {
         return $this->date;
     }
 
-    public function setDate(string $date): self
+    /**
+     * @param string $date
+     */
+    public function setDate(string $date): void
     {
         $this->date = $date;
-
-        return $this;
     }
+
+    /**
+     * @return Article
+     */
+    public function getIdArticle(): Article
+    {
+        return $this->idArticle;
+    }
+
+    /**
+     * @param Article $idArticle
+     */
+    public function setIdArticle(Article $idArticle): void
+    {
+        $this->idArticle = $idArticle;
+    }
+
+    /**
+     * @var Article
+     *
+     * @ORM\ManyToOne(targetEntity=Article::class)
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_article", referencedColumnName="id")
+     * })
+     */
+    private $idArticle;
 
 
 }

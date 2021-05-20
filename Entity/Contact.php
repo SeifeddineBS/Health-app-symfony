@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Contact
  *
- * @ORM\Table(name="contact")
+ * @ORM\Table(name="contact", indexes={@ORM\Index(name="fk_id_user2", columns={"id_user"})})
  * @ORM\Entity
  */
 class Contact
@@ -27,13 +27,6 @@ class Contact
      * @ORM\Column(name="type", type="string", length=255, nullable=false)
      */
     private $type;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="id_user", type="string", length=255, nullable=false)
-     */
-    private $idUser;
 
     /**
      * @var string|null
@@ -63,82 +56,128 @@ class Contact
      */
     private $etat;
 
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_user", referencedColumnName="id")
+     * })
+     */
+    private $idUser;
+
+    /**
+     * @return int
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
     public function getType(): ?string
     {
         return $this->type;
     }
 
-    public function setType(string $type): self
+    /**
+     * @param string $type
+     */
+    public function setType(string $type): void
     {
         $this->type = $type;
-
-        return $this;
     }
 
-    public function getIdUser(): ?string
-    {
-        return $this->idUser;
-    }
-
-    public function setIdUser(string $idUser): self
-    {
-        $this->idUser = $idUser;
-
-        return $this;
-    }
-
+    /**
+     * @return string|null
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    public function setEmail(?string $email): self
+    /**
+     * @param string|null $email
+     */
+    public function setEmail(?string $email): void
     {
         $this->email = $email;
-
-        return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getChamp(): ?string
     {
         return $this->champ;
     }
 
-    public function setChamp(string $champ): self
+    /**
+     * @param string $champ
+     */
+    public function setChamp(string $champ): void
     {
         $this->champ = $champ;
-
-        return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    /**
+     * @return DateTime
+     */
+    public function getDate(): ?DateTime
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    /**
+     * @param \DateTime $date
+     */
+    public function setDate(\DateTime $date): void
     {
         $this->date = $date;
-
-        return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getEtat(): ?string
     {
         return $this->etat;
     }
 
-    public function setEtat(?string $etat): self
+    /**
+     * @param string|null $etat
+     */
+    public function setEtat(?string $etat): void
     {
         $this->etat = $etat;
-
-        return $this;
     }
+
+    /**
+     * @return User
+     */
+    public function getIdUser(): ?User
+    {
+        return $this->idUser;
+    }
+
+    /**
+     * @param User $idUser
+     */
+    public function setIdUser(User $idUser): void
+    {
+        $this->idUser = $idUser;
+    }
+
 
 
 }
